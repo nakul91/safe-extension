@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/images/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safe Wallet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <script src="./src/scripts/onload.ts" type="module"></script>
+    <script type="module">
+      import process from "process";
+      import EventEmitter from "events";
+      import { Buffer } from "buffer";
+      import { initWasm, TW } from "@trustwallet/wallet-core";
+      window.TW = TW;
+      window.WalletCore = await initWasm();
+      window.Buffer = Buffer;
+      window.process = process;
+      window.EventEmitter = EventEmitter;
+      window.isExtension = Boolean(window.chrome && chrome.runtime && chrome.runtime.id);
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+    <noscript>
+      <strong
+        >We're sorry but safe wallet doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+  </body>
+</html>
