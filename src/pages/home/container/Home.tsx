@@ -10,6 +10,7 @@ import { Header, HomeTabs } from "../components";
 import { ITokenListType } from "../types";
 import { BaseGoerli } from "../../../constants/chains/baseGoerli";
 import { getWalletBalanceApi } from "../apiServices";
+import ActionsTab from "../components/ActionsTab";
 
 export default function Home() {
   const [walletBalances, setWalletBalances] = useState<Array<ITokenListType>>([]);
@@ -86,6 +87,7 @@ export default function Home() {
           </div>
         </div>
         <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} />
+        <ActionsTab />
       </div>
     </div>
   );
