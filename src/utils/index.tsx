@@ -20,6 +20,8 @@ import {
 import { CHAIN_LIST, IChainTypes } from "../constants/chains";
 import { getWallet } from "../store/WalletStore";
 import BigNumber from "bignumber.js";
+import { getStore } from "../store/GlobalStore";
+import { ACTIONS } from "../context/GlobalContext";
 
 export const getImage = (image: string) => {
   if (!image) {
@@ -88,6 +90,41 @@ export const shortenAddress = (str?: string, isLengther?: boolean, maxCharsCount
     return str.substring(0, 5) + "..." + str.substring(str.length - 4, str.length);
   }
   return str;
+};
+
+export const toastFlashMessage = (
+  message: string | React.ReactElement,
+  type: string,
+  delay = 3000,
+) => {
+  const { dispatch } = getStore();
+  dispatch({
+      type: ACTIONS.CLEAR_TOAST,
+      payload: {
+          message: "",
+          toastType: "",
+      },
+  });
+  setTimeout(function () {
+      dispatch({
+          type: ACTIONS.SHOW_TOAST,
+          payload: {
+              message: message,
+              toastType: type,
+          },
+      });
+      setTimeout(function () {
+          dispatch({
+              type: ACTIONS.HIDE_TOAST,
+              payload: {},
+          });
+      }, delay);
+  }, 200);
+};
+
+export const handleCopy = (addressId: string) => {
+  toastFlashMessage("Copied to clipboard", "success");
+  navigator.clipboard.writeText(addressId);
 };
 
 export const getSignedUsing = (signedUsing = "") => {
@@ -288,6 +325,7 @@ export const capitalizeFirstLetter = (str: string) => {
 export const capitalizeWords = (str: string, lower = false) => {
   return (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) => match.toUpperCase());
 };
+
 
 export const formatDate = (str: string, isWithTime = false) => {
   return moment(str).format(`${isWithTime ? "ddd DD MMM YYYY, HH:mm:ss" : "MMM DD, YYYY"}`);

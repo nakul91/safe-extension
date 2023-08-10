@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { ISelectedChain, IWalletController } from "../../../constants";
 import { IChainTypes } from "../../../constants/chains";
 
@@ -28,6 +29,36 @@ export type TPortfolioCardSettingTypes = {
   setOpenCardSetting?: (value: boolean) => void;
   handleChange: (key: string, value: string) => void;
   formData?: THomeWalletFormData;
+};
+
+export type THeaderTypes = {
+  type?: string;
+  title: string;
+  className?: string;
+  titleClassName?: string;
+  logo?: string;
+  onClick?: () => void;
+  exchangeProviderType?: string;
+  handleOpenProvider?: () => void;
+  disableProvider?: boolean;
+  showProviderSwitch?: boolean;
+  showSwitchIcon?: boolean;
+  tooltipMessage?:
+      | string
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+  fromBuy?: boolean;
+};
+
+export type TConnectionHeaderTypes = {
+  walletName: string;
+  walletAddress: string;
+  connectionIcon: string | undefined;
+  connectionName: string;
+  headerColor: string;
+};
+
+export type TReceiveWithQRTypes = {
+  walletAddress: string;
 };
 
 export type TChangeCardColorTypes = {
