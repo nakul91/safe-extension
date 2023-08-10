@@ -5,12 +5,12 @@ import { TApiResponse } from "../types";
 const axiosInstance: AxiosInstance = axios.create();
 export const baseURLv2: string | undefined = "";
 
-axiosInstance.defaults.baseURL = ``;
+axiosInstance.defaults.baseURL = `https://api.covalenthq.com/v1/`;
 axiosInstance.interceptors.request.use(
   //@ts-ignore
   function (config: AxiosRequestConfig) {
     config.headers = {
-      "x-api-key": "123",
+      Authorization: "Bearer cqt_rQyRbJkyrfwgp9VJTwWGpqQ4RY8x",
     };
     return config;
   },

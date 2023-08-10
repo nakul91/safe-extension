@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import _ from "lodash";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { ZERO_USD } from "../../../constants";
@@ -9,20 +9,39 @@ import { getImage, shortenAddress } from "../../../utils";
 import { Header, HomeTabs } from "../components";
 import { ITokenListType } from "../types";
 import { BaseGoerli } from "../../../constants/chains/baseGoerli";
+import { getWalletBalanceApi } from "../apiServices";
 
 export default function Home() {
   const [walletBalances, setWalletBalances] = useState<Array<ITokenListType>>([]);
-  const [tokenLoading, SetTokenLoading] = useState(false);
-
+  const [tokenLoading, setTokenLoading] = useState(false);
+  const [balance, setBalance] = useState(0);
   const {
     state: { safeAddress },
     dispatch,
   } = useContext(GlobalContext);
-
-  const getWalletBalance = async (tokenLoading: boolean) => {};
-
   const [searchParams] = useSearchParams();
   const isFullscreen = searchParams.get("fullscreen");
+
+  useEffect(() => {
+    if (safeAddress) {
+      getWalletBalanceApi("base-testnet", safeAddress).then((res: any) => {
+        if (res.error) {
+          //handle error here
+          return;
+        }
+        const data = { ...res.data };
+        let balance = 0;
+        const tokens = data?.items;
+        tokens.forEach((_token: { quote: number | string }) => {
+          balance = balance + Number(_token.quote);
+        });
+        const walletTokens = [...tokens];
+        setWalletBalances(walletTokens);
+        setTokenLoading(false);
+        setBalance(balance);
+      });
+    }
+  }, [safeAddress]);
 
   return (
     <div
@@ -59,14 +78,14 @@ export default function Home() {
                   />
                   <div className="grid grid-cols-2 divide-x items-center">
                     <p className="label3 text-white/[.70] mr-4">{BaseGoerli.name}</p>
-                    <p className="label3 text-white/[.70] pl-4">{ZERO_USD}</p>
+                    <p className="label3 text-white/[.70] pl-4">{balance ? `$${balance}` : ZERO_USD}</p>
                   </div>
                 </div>
               </div>
             </AnimatePresence>
           </div>
         </div>
-        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} getWalletBalance={getWalletBalance} />
+        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} />
       </div>
     </div>
   );
