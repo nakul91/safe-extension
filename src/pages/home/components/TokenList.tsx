@@ -16,9 +16,10 @@ import { DEFAULT_EVM_CONTRACT_DECIMALS } from "../../../constants";
 
 const TokenList: FC<TTokenTypes> = (props) => {
   const { walletBalances, tokenLoading } = props;
-  const [tokenList, setTokenList] = useState<Array<ITokenListType>>([]);
+  const [tokenList, setTokenList] = useState<Array<any>>([]);
   useEffect(() => {
-    const parsedData: Array<ITokenListType> = JSON.parse(JSON.stringify(walletBalances));
+    console.log("walletBalances", walletBalances);
+    const parsedData: Array<any> = JSON.parse(JSON.stringify(walletBalances));
     setTokenList(parsedData);
   }, [walletBalances]);
 
@@ -33,6 +34,7 @@ const TokenList: FC<TTokenTypes> = (props) => {
       ) : (
         tokenList.map((token, key) => {
           if (!token.contract_name) return;
+          console.log("token", token);
           return (
             <div
               role={"presentation"}
@@ -73,8 +75,8 @@ const TokenList: FC<TTokenTypes> = (props) => {
                 </p>
 
                 <>
-                  {!token.quote_pct_change_24h &&
-                  !parseInt(token.quote_rate_24h.toString()) &&
+                  {!token.pretty_quote_24h &&
+                  !parseInt(token?.quote_rate_24h?.toString()) &&
                   !token.quote_rate ? null : (
                     <p
                       className={`label2 flex ${

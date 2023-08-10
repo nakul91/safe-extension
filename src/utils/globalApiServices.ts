@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { TResponse } from "../types";
-import axiosInstance from "./httpinterceptor";
+import axiosInstance from "./httpInterceptor";
 
 export const globalGetService = <TParamType>(
   url: string,

@@ -50,7 +50,7 @@ const ActivitiesListItem: FC<any> = (props) => {
       <div
         role="presentation"
         onClick={onShowActivityDetail}
-        className="flex items-center cursor-pointer hover:bg-background-50 dark:hover:bg-greyDark-500 p-4"
+        className="flex items-center cursor-pointer hover:bg-background-50 p-4"
       >
         <div className="relative">
           <img
