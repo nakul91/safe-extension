@@ -599,3 +599,29 @@ export const getWindowTimeout = (icon: string | null) => {
   }
   return 2000;
 };
+
+export const nftURLFormatter = (nft: any) => {
+  let imageURL = nft?.image_preview_url?.length ? nft?.image_preview_url : nft?.image_url;
+  if (!imageURL.length) {
+    imageURL = nft.banner_image_url;
+  }
+  if (!imageURL) return getImage("placeholder_nft.png");
+  imageURL = imageURL.replace("ipfs://", "https://ipfs.io/ipfs/");
+  return imageURL;
+};
+
+export const getTransactionTypeName = (type: string) => {
+  let t = type?.toLowerCase();
+  switch (t) {
+    case "contract_execution":
+      return "smartContract";
+    case "send":
+      return "sent";
+    case "receive":
+      return "received";
+    case "approve":
+      return "approve";
+    default:
+      return capitalizeFirstLetter(type);
+  }
+};

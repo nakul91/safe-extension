@@ -6,7 +6,7 @@ export const BaseGoerli = {
   index: 10,
   id: "base-goerli",
   name: "Base Goerli",
-  logo: "",
+  logo: "https://storage.googleapis.com/frontier-wallet/blockchains/base/info/logo.svg",
   coinId: 84531,
   symbol: "ETH",
   chainId: "84531",
