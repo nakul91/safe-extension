@@ -5,6 +5,7 @@ import { WalletHoc } from "./hocs/WalletHoc";
 import { onboardingRoutes } from "./pages/onboarding/onboardingRoutes";
 import { homeRoutes } from "./pages/home/homeRoutes";
 import PrivateRoute from "./hocs/PrivateRoute";
+import { sendRoutes } from "./pages/send/sendRoutes";
 
 const App: FC = () => {
   const location = useLocation();
@@ -26,7 +27,7 @@ const App: FC = () => {
         <WalletHoc>
           <>
             <Routes>
-              {[...onboardingRoutes].map(({ path, element, key }, index) => (
+              {[...onboardingRoutes,...sendRoutes].map(({ path, element, key }, index) => (
                 <Fragment key={index}>
                   <Route path={path} element={element} key={key} />
                 </Fragment>

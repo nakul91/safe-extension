@@ -86,8 +86,8 @@ export default function Home() {
             </AnimatePresence>
           </div>
         </div>
-        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} />
         <ActionsTab />
+        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} />
       </div>
     </div>
   );
