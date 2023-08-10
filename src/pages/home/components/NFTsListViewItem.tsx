@@ -1,19 +1,13 @@
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { FC } from "react";
+import { FC, Key } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { capitalizeWords, getImage, nftURLFormatter } from "../../../utils";
 
-import { INFTListType } from "../types";
-
-type TListViewItemProps = {
-  collection: INFTListType;
-};
-
-const NFTsListViewItem: FC<TListViewItemProps> = (props) => {
+const NFTsListViewItem: FC<any> = (props) => {
   const { collection } = props;
   const {
     nft_data: nftData,
-    name,
+    contract_name: name,
     medium_username: mediumUserName,
     twitter_username: twitterUserName,
     slug,
@@ -22,10 +16,10 @@ const NFTsListViewItem: FC<TListViewItemProps> = (props) => {
 
   return (
     <>
-      <div className="nftListCard p-6 border border-neutral-100 dark:border-neutralDark-300 rounded-xl mx-4 mb-4 h-48 relative overflow-hidden cursor-pointer">
+      <div className="mt-5 nftListCard p-6 border border-neutral-100 dark:border-neutralDark-300 rounded-xl mx-4 mb-4 h-48 relative overflow-hidden cursor-pointer">
         <>
           <div className="nftCards">
-            {nftData?.slice(0, 3)?.map((nft, key) => (
+            {nftData?.slice(0, 3)?.map((nft: any, key: Key | null | undefined) => (
               <div className="card smallCard" key={key}>
                 <div className="cardImageWrapper">
                   <LazyLoadImage
@@ -41,7 +35,7 @@ const NFTsListViewItem: FC<TListViewItemProps> = (props) => {
             ))}
           </div>
           <div className="nftCards secondRow">
-            {nftData?.slice(3, 6)?.map((nft, key) => (
+            {nftData?.slice(3, 6)?.map((nft: any, key: Key | null | undefined) => (
               <div className="card smallCard" key={key}>
                 <div className="cardImageWrapper">
                   <img src={nftURLFormatter(nft)} alt="bg" className="cardImage" />

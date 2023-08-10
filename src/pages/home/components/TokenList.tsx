@@ -18,9 +18,10 @@ const TokenList: FC<TTokenTypes> = (props) => {
   const { walletBalances, tokenLoading } = props;
   const [tokenList, setTokenList] = useState<Array<any>>([]);
   useEffect(() => {
-    console.log("walletBalances", walletBalances);
     const parsedData: Array<any> = JSON.parse(JSON.stringify(walletBalances));
-    setTokenList(parsedData);
+    if (parsedData) {
+      setTokenList(parsedData.filter((token) => token.type === "cryptocurrency" || token.type === "dust"));
+    }
   }, [walletBalances]);
 
   const isExpectedChains = (params: any) => {
@@ -31,10 +32,11 @@ const TokenList: FC<TTokenTypes> = (props) => {
     <div>
       {tokenLoading ? (
         <Shimmer type="tokenList" />
+      ) : tokenList.length === 0 ? (
+        <p className="text-center">No tokens</p>
       ) : (
         tokenList.map((token, key) => {
           if (!token.contract_name) return;
-          console.log("token", token);
           return (
             <div
               role={"presentation"}
@@ -76,26 +78,21 @@ const TokenList: FC<TTokenTypes> = (props) => {
 
                 <>
                   {!token.pretty_quote_24h &&
-                  !parseInt(token?.quote_rate_24h?.toString()) &&
+                  !parseInt(token?.pretty_quote_24h?.toString()) &&
                   !token.quote_rate ? null : (
                     <p
                       className={`label2 flex ${
-                        isPositiveValue(token.quote_pct_change_24h) === true
+                        isPositiveValue(token.pretty_quote_24h) === true
                           ? "text-secondary-500 dark:text-secondaryDark-700"
                           : "text-error-500 dark:text-errorDark-900"
                       }`}
                     >
                       <img
-                        src={getImage(`${getPercentArrowImage(token.quote_pct_change_24h)}`)}
+                        src={getImage(`${getPercentArrowImage(token.pretty_quote_24h)}`)}
                         alt=" "
-                        className="pr-0.5 dark:hidden"
+                        className="pr-0.5"
                       />
-                      <img
-                        src={getImage(`${getPercentArrowImage(token.quote_pct_change_24h, true)}`)}
-                        alt=" "
-                        className="pr-0.5 hidden dark:block"
-                      />
-                      {getPercentageFormatter(token.quote_pct_change_24h)}
+                      {getPercentageFormatter(token?.pretty_quote_24h?.replace("$", ""))}
                       {
                         <span className="pl-1">
                           {getCurrencyFormattedNumber(
