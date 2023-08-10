@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Safe Wallet",
+  "version": "1.0.29",
+  "description": "The unified non-custodial Wallet to Store, Stake, Swap, Bridge Crypto & NFTs. Interact with DeFi apps, 50+ Blockchains & ecosystems.",
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "activeTab",
+    "notifications",
+    "tabs",
+    "alarms",
+    "scripting"
+  ],
+  "author": "Safe",
+  "homepage_url": "https://blocktheory.com/",
+  "short_name": "Safe",
+
+  "background": {
+    "service_worker": "src/scripts/background.ts",
+    "type": "module"
+  },
+  "minimum_chrome_version": "100",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/scripts/content.ts"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ; object-src 'self'"
+  },
+  "update_via_cache": "browser",
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "assets/injector.js",
+        "assets/broadcastChannelMessage.js",
+        "assets/portMessage.js",
+        "assets/index.js",
+        "assets/constants.js",
+        "assets/alertMessage.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}
