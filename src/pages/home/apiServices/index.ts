@@ -1,8 +1,10 @@
 import { globalGetService } from "../../../utils/globalApiServices";
 
-export function getWalletBalanceApi(chainId: string = "base-testnet", address: string) {
+export function getWalletBalanceApi(chainName: string = "base-testnet", address: string) {
   return new Promise((resolve, reject) => {
-    globalGetService(`${chainId}/address/${address}/balances_v2/`, {})
+    // const testAddress = "0x06e70f295B6337c213DDe82D13cc198027687A7B";
+    // const testChain = "eth-mainnet";
+    globalGetService(`${chainName}/address/${address}/balances_v2/`, { nft: true })
       .then((response) => resolve(response.data))
       .catch((e) => reject(e));
   });

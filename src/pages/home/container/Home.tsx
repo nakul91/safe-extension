@@ -14,7 +14,8 @@ import ActionsTab from "../components/ActionsTab";
 
 export default function Home() {
   const [walletBalances, setWalletBalances] = useState<Array<ITokenListType>>([]);
-  const [tokenLoading, setTokenLoading] = useState(false);
+  const [tokenLoading, setTokenLoading] = useState(true);
+  const [activitiesLoader, setActivitiesLoader] = useState(true);
   const [balance, setBalance] = useState(0);
   const {
     state: { safeAddress },

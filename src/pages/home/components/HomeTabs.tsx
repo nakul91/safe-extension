@@ -108,7 +108,7 @@ const HomeTabs: FC<any> = (props) => {
         {activeTab === TABS_NAMES.TOKENS && (
           <TokenList walletBalances={walletBalances} tokenLoading={tokenLoading} getWalletBalance={getWalletBalance} />
         )}
-        {activeTab === TABS_NAMES.NFTS && <NFTsList />}
+        {activeTab === TABS_NAMES.NFTS && <NFTsList walletBalances={walletBalances} loader={tokenLoading} />}
         {activeTab === TABS_NAMES.ACTIVITIES && (
           <ActivitiesList
             setIsTxnLoadingError={setIsTxnLoadingError}

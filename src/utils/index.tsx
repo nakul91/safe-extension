@@ -323,7 +323,7 @@ export const capitalizeFirstLetter = (str: string) => {
 };
 
 export const capitalizeWords = (str: string, lower = false) => {
-  return (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) => match.toUpperCase());
+  return (lower ? str.toLowerCase() : str)?.replace(/(?:^|\s|["'([{])+\S/g, (match) => match.toUpperCase());
 };
 
 
@@ -639,12 +639,10 @@ export const getWindowTimeout = (icon: string | null) => {
 };
 
 export const nftURLFormatter = (nft: any) => {
-  let imageURL = nft?.image_preview_url?.length ? nft?.image_preview_url : nft?.image_url;
-  if (!imageURL.length) {
-    imageURL = nft.banner_image_url;
-  }
+  let imageURL = nft?.external_data?.image ? nft?.external_data?.image : nft?.token_url;
+  console.log("imageURL", imageURL);
   if (!imageURL) return getImage("placeholder_nft.png");
-  imageURL = imageURL.replace("ipfs://", "https://ipfs.io/ipfs/");
+  imageURL = imageURL?.replace("ipfs://", "https://ipfs.io/ipfs/");
   return imageURL;
 };
 
