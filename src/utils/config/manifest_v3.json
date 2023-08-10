@@ -17,7 +17,27 @@
   "author": "Safe",
   "homepage_url": "https://blocktheory.com/",
   "short_name": "Safe",
-
+  "action": {
+    "default_icon": {
+      "16": "assets/safe-16.png",
+      "20": "assets/safe-20.png",
+      "32": "assets/safe-32.png",
+      "36": "assets/safe-36.png",
+      "64": "assets/safe-64.png",
+      "128": "assets/safe-128.png",
+      "256": "assets/safe-256.png"
+    },
+    "default_title": "Safe Wallet Extension"
+  },
+  "icons": {
+    "16": "assets/safe-16.png",
+    "20": "assets/safe-20.png",
+    "32": "assets/safe-32.png",
+    "36": "assets/safe-36.png",
+    "64": "assets/safe-64.png",
+    "128": "assets/safe-128.png",
+    "256": "assets/safe-256.png"
+  },
   "background": {
     "service_worker": "src/scripts/background.ts",
     "type": "module"
