@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Safe Wallet",
-  "version": "1.0.29",
-  "description": "The unified non-custodial Wallet to Store, Stake, Swap, Bridge Crypto & NFTs. Interact with DeFi apps, 50+ Blockchains & ecosystems.",
+  "name": "Safe Base",
+  "version": "1.0.0",
+  "description": "The non-custodial Wallet to Store all your assets on the Base.",
   "host_permissions": ["http://*/*", "https://*/*"],
   "permissions": [
     "storage",
@@ -27,7 +27,7 @@
       "128": "assets/safe-128.png",
       "256": "assets/safe-256.png"
     },
-    "default_title": "Safe Wallet Extension"
+    "default_title": "Safe Base Extension"
   },
   "icons": {
     "16": "assets/safe-16.png",

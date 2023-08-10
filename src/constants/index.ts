@@ -3,7 +3,7 @@ import { lib, mode, pad } from "crypto-js";
 export const APP_NAME = "Safe chrome extension wallet";
 
 export const BASE_UNIT = 10e8;
-export const EXT_CURRENT_VERSION = "1.0.29";
+export const EXT_CURRENT_VERSION = "1.0.0";
 export const COSMOS_BASE_UNIT = 1e6;
 export const DEFAULT_GASLIMIT_EVM = 21000;
 export const DEFAULT_EVM_CONTRACT_DECIMALS = 18;
