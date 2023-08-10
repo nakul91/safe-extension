@@ -73,53 +73,37 @@ const HomeTabs: FC<any> = (props) => {
       >
         <li
           role={"presentation"}
-          className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2 cursor-pointer ${
-            activeTab === "tokens" && !singleTabState
-              ? "text-primary-700 dark:text-primaryDark-700 active"
+          className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2  cursor-pointer ${
+            activeTab === TABS_NAMES.TOKENS
+              ? "text-primary-700 dark:text-primaryDark-700 active border-primary-700"
               : "text-text-500 dark:text-textDark-700"
           }`}
-          onClick={() => handleTabChange("tokens")}
-          onKeyDown={() => handleTabChange("tokens")}
+          onClick={() => handleTabChange(TABS_NAMES.TOKENS)}
+          onKeyDown={() => handleTabChange(TABS_NAMES.TOKENS)}
         >
           Tokens
         </li>
         <li
           role={"presentation"}
           className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2 cursor-pointer ${
-            activeTab === "tokens" && !singleTabState
-              ? "text-primary-700 dark:text-primaryDark-700 active"
-              : "text-text-500 dark:text-textDark-700"
+            activeTab === TABS_NAMES.NFTS ? "text-primary-700  active border-primary-700" : "text-text-500 "
           }`}
-          onClick={() => handleTabChange("tokens")}
-          onKeyDown={() => handleTabChange("tokens")}
+          onClick={() => handleTabChange(TABS_NAMES.NFTS)}
+          onKeyDown={() => handleTabChange(TABS_NAMES.NFTS)}
         >
           NFTs
         </li>
         <li
           role={"presentation"}
           className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2 cursor-pointer ${
-            activeTab === "tokens" && !singleTabState
-              ? "text-primary-700 dark:text-primaryDark-700 active"
-              : "text-text-500 dark:text-textDark-700"
+            activeTab === TABS_NAMES.ACTIVITIES ? "text-primary-700  active border-primary-700" : "text-text-500"
           }`}
-          onClick={() => handleTabChange("tokens")}
-          onKeyDown={() => handleTabChange("tokens")}
+          onClick={() => handleTabChange(TABS_NAMES.ACTIVITIES)}
+          onKeyDown={() => handleTabChange(TABS_NAMES.ACTIVITIES)}
         >
           Activities
         </li>
       </ul>
-      {activeTab === TABS_NAMES.TOKENS ? (
-        <div className="px-4 pt-3 pb-1 flex items-center justify-between">
-          {!tokenLoading && walletBalances && walletBalances?.length > 0 ? (
-            <span className="label2 text-text-500 dark:text-text-500">
-              {walletBalances?.length} {walletBalances && walletBalances?.length >= 2 ? "Tokens" : "Token"}
-            </span>
-          ) : (
-            ""
-          )}
-        </div>
-      ) : null}
-
       <div className="pb-16">
         {activeTab === TABS_NAMES.TOKENS && (
           <TokenList walletBalances={walletBalances} tokenLoading={tokenLoading} getWalletBalance={getWalletBalance} />
