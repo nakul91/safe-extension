@@ -8,11 +8,13 @@ export enum ACTIONS {
   SHOW_TOAST = "SHOW_TOAST",
   HIDE_TOAST = "HIDE_TOAST",
   SET_SAFE_ADDRESS = "SET_SAFE_ADDRESS",
+  SET_AUTH_MODALPACK = "SET_AUTH_MODALPACK",
 }
 
 export type TInitialStateType = {
   toastLists: Array<TToastType> | [];
   safeAddress: string;
+  web3AuthModalPack: any;
 };
 
 export type TActionType = {
@@ -32,6 +34,7 @@ interface IProps {
 const initialState: TInitialStateType = {
   toastLists: [],
   safeAddress: "",
+  web3AuthModalPack: undefined,
 };
 
 export type TGlobalContextType = {
@@ -90,6 +93,11 @@ function reducer(state: TInitialStateType, action: TActionType) {
       return {
         ...state,
         safeAddress: action.payload as string,
+      };
+    case ACTIONS.SET_AUTH_MODALPACK:
+      return {
+        ...state,
+        safeAddress: action.payload as any,
       };
     default:
       return state;

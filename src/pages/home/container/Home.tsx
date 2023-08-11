@@ -9,13 +9,15 @@ import { getImage, shortenAddress } from "../../../utils";
 import { Header, HomeTabs } from "../components";
 import { ITokenListType } from "../types";
 import { BaseGoerli } from "../../../constants/chains/baseGoerli";
-import { getWalletBalanceApi } from "../apiServices";
+import { getAllTransactionApi, getWalletBalanceApi } from "../apiServices";
 import ActionsTab from "../components/ActionsTab";
 
 export default function Home() {
   const [walletBalances, setWalletBalances] = useState<Array<ITokenListType>>([]);
   const [tokenLoading, setTokenLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const [activitiesLoader, setActivitiesLoader] = useState(true);
+  const [activityData, setActivityData] = useState({});
   const [balance, setBalance] = useState(0);
   const {
     state: { safeAddress },
@@ -41,6 +43,15 @@ export default function Home() {
         setWalletBalances(walletTokens);
         setTokenLoading(false);
         setBalance(balance);
+      });
+      getAllTransactionApi("base-testnet", safeAddress, page).then((res: any) => {
+        if (res.error) {
+          //handle error here
+          return;
+        }
+        const data = { ...res.data };
+        setActivityData(data);
+        setActivitiesLoader(false);
       });
     }
   }, [safeAddress]);
@@ -88,7 +99,7 @@ export default function Home() {
           </div>
         </div>
         <ActionsTab />
-        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} />
+        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} activityData={activityData} />
       </div>
     </div>
   );
