@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useSpring } from "react-spring";
 import { animated } from "react-spring";
+import NoState from "../../../ui_components/NoState";
 
 import { getImage } from "../../../utils";
 import { INFTData, INFTsListPropsType } from "../types";
@@ -31,7 +32,14 @@ const NFTsList: FC<any> = (props) => {
             {loader ? (
               <Shimmer type="nftListView" />
             ) : nftCollections?.length === 0 ? (
-              <p className="text-center">No nfts</p>
+              <NoState
+                    className="h-20 w-35 my-6"
+                    image={
+                      "nft_list_nostate_dark.svg" 
+                    }
+                    title={"No NFT's"}
+                    titleClassName="label2 text-text-500"
+                />
             ) : (
               nftCollections?.map((collection: any, index) => {
                 return <NFTsListViewItem collection={collection} key={index} />;

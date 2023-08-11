@@ -11,6 +11,7 @@ export const getSafes = async (web3AuthModalPack: Web3AuthModalPack) => {
     signerOrProvider: signer || provider,
   });
   const safeFactory = await SafeFactory.create({ ethAdapter: ethAdapter });
+  console.log("adderess",await signer.getAddress());
   const safeAccountConfig: SafeAccountConfig = {
     owners: [await signer.getAddress()],
     threshold: 1,

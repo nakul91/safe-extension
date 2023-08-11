@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { ZERO_USD } from "../../../constants";
 import { GlobalContext } from "../../../context/GlobalContext";
-import { getImage, shortenAddress } from "../../../utils";
+import { getImage, handleCopy, shortenAddress } from "../../../utils";
 import { Header, HomeTabs } from "../components";
 import { ITokenListType } from "../types";
 import { BaseGoerli } from "../../../constants/chains/baseGoerli";
@@ -15,7 +15,7 @@ import ActionsTab from "../components/ActionsTab";
 export default function Home() {
   const [walletBalances, setWalletBalances] = useState<Array<ITokenListType>>([]);
   const [tokenLoading, setTokenLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [activitiesLoader, setActivitiesLoader] = useState(true);
   const [activityData, setActivityData] = useState({});
   const [balance, setBalance] = useState(0);
@@ -77,6 +77,13 @@ export default function Home() {
                   <p className="sub-title text-grey-500/90 pb-2">Smart Account</p>
                   <p className="label3 text-neutral-50/40 flex gap-2">
                     <span>{shortenAddress(safeAddress)}</span>
+                    <img
+                    role="presentation"
+                    src={getImage("copy_light_grey.svg")}
+                    alt=" "
+                    className="cursor-pointer"
+                    onClick={() => handleCopy(safeAddress)}
+                    />
                   </p>
                 </div>
                 <div className="flex items-center mt-4">

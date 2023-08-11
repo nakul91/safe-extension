@@ -10,7 +10,7 @@ export function getWalletBalanceApi(chainName: string = "base-testnet", address:
   });
 }
 
-export function getAllTransactionApi(chainName: string = "base-testnet", address: string, page: number = 1) {
+export function getAllTransactionApi(chainName: string = "base-testnet", address: string, page: number = 0) {
   return new Promise((resolve, reject) => {
     // const testAddress = "0x06e70f295B6337c213DDe82D13cc198027687A7B";
     // const testChain = "matic-mainnet";

@@ -9,13 +9,48 @@ export enum ACTIONS {
   HIDE_TOAST = "HIDE_TOAST",
   SET_SAFE_ADDRESS = "SET_SAFE_ADDRESS",
   SET_AUTH_MODALPACK = "SET_AUTH_MODALPACK",
+  SET_TOKENS_LIST = "SET_TOKENS_LIST",
 }
 
 export type TInitialStateType = {
   toastLists: Array<TToastType> | [];
   safeAddress: string;
   web3AuthModalPack: any;
+  tokensList: Array<ITokenListType> | [];
 };
+
+
+export interface ITokenListType {
+  contract_name: string;
+  contract_ticker_symbol: string;
+  contract_decimals: number;
+  token_decimals?: number;
+  contract_address?: string;
+  coin: number;
+  type: string;
+  balance: string;
+  quote: number | string;
+  quote_rate: number;
+  logo_url?: string;
+  quote_rate_24h: number;
+  quote_pct_change_24h: number;
+  verified?: string;
+  token_logo_url?: string;
+  token_name?: string;
+  token_address?: string;
+  token_symbol?: string;
+  denom?: string;
+  token_price?: string;
+  token_website?: string;
+  token_trade_volume?: string;
+  token_listed_count?: string;
+  token_last_activity?: string;
+  account_number?: number;
+  sequence?: number;
+  nonce?: number;
+  block_hash?: string;
+  block_height?: number;
+}
 
 export type TActionType = {
   type: string;

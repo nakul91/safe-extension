@@ -18,6 +18,18 @@ export type TPrimaryBtnProps = {
     loader?: boolean;
 };
 
+export type TNoStateProps = {
+    image: string;
+    title: React.ReactNode | string;
+    paragraph?: ReactNode;
+    paragraphClassName?: string;
+    className?: string;
+    titleClassName?: string;
+    btnTitle?: React.ReactNode | string;
+    onClick?: () => void;
+    btnClassName?: string;
+};
+
 export type TSecondaryBtnProps = {
     children: React.ReactNode;
     className: string;

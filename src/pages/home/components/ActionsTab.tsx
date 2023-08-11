@@ -22,6 +22,7 @@ const ActionsTab: FC<TActionsTab> = (props) => {
                             }
                             onClick={() => navigate("/send")}
                         >
+                          Send
                         </IconButton>
                         <IconButton
                             type="button"
@@ -35,6 +36,7 @@ const ActionsTab: FC<TActionsTab> = (props) => {
                             }
                             onClick={() => navigate("/receive")}
                         >
+                          Receive
                         </IconButton>
       </div>
     </>
