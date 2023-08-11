@@ -13,7 +13,6 @@ import {
 } from "../../../utils";
 import { ITransactionType } from "../types";
 const ActivitiesListItem: FC<any> = (props) => {
-  console.log("props", props);
   const { item, key, fromAddress } = props;
   const [type, setType] = useState(TXN_TYPE.Send);
   const onShowActivityDetail = () => {
