@@ -6,11 +6,13 @@ import { modalConfig, web3AuthOptions, web3AuthConfig } from "../../../constants
 import { useContext, useEffect, useState } from "react";
 import { ACTIONS, GlobalContext } from "../../../context/GlobalContext";
 import { getSafes } from "../../utils";
+import { useWallet } from "../../../context/WalletContext";
 
 export default function Onboarding() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
   const { dispatch } = useContext(GlobalContext);
+  const wallet = useWallet();
 
   const signIn = async () => {
     await web3AuthModalPack.init({ options: web3AuthOptions, adapters: undefined, modalConfig });
@@ -35,6 +37,8 @@ export default function Onboarding() {
       type: ACTIONS.SET_SAFE_ADDRESS,
       payload: safeSdkOwnerPredicted,
     });
+    await wallet?.setFirstTimeFlow("create");
+    await wallet?.addWalletAddress({ address: safeSdkOwnerPredicted });
   };
 
   useEffect(() => {

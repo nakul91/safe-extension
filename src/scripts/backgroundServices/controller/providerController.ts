@@ -1,8 +1,4 @@
-import { serializeError } from "eth-rpc-errors";
-
-import { CHAINS_IDS } from "../../../constants";
 import { ETHEREUM_REQUESTS } from "../../constants";
-import { notification } from "../../webapi";
 import { walletController } from "..";
 import { jsonRPC } from "../apiServices/";
 import { SignTypedDataVersion } from "@metamask/eth-sig-util";
@@ -28,7 +24,7 @@ class ProviderController {
   };
 
   ethAccounts = async (params: { origin: string }) => {
-    if (params.origin && walletController.siteApproved(params.origin)) {
+    if (params.origin) {
       const {
         selectedChain: { address, chain },
       } = await walletController?.getSelectedWallet();

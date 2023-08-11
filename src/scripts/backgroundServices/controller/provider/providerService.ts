@@ -134,14 +134,7 @@ export default (req: IReq): any => {
       const {
         session: { origin },
       } = req;
-      if (
-        [
-          ETHEREUM_REQUESTS.accounts,
-          SOLANA_REQUESTS.disconnectSolAccount,
-          COSMOS_REQUESTS.disconnectCosAccount,
-          SUI_REQUESTS.disconnectSuiAccount,
-        ]?.includes(method as SOLANA_REQUESTS | ETHEREUM_REQUESTS | COSMOS_REQUESTS | SUI_REQUESTS)
-      ) {
+      if ([ETHEREUM_REQUESTS.accounts]?.includes(method as ETHEREUM_REQUESTS)) {
         _params = { origin };
       }
 

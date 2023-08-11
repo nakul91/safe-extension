@@ -145,30 +145,7 @@ export class Store {
 
   async setLocalStore(data: any) {
     const _data = data as IExtensionData;
-    if (_data?.WalletController?.length) {
-      _data.WalletController.forEach((wallet) => {
-        const _accounts: ISelectedChain[] = [];
-        wallet?.accounts?.forEach((account) => {
-          const _account = { ...account };
-          if (!_account.address.includes(ENKRYPT_HANDLER)) {
-            const _addr = this.aes256Encrypt(_account.address);
-            _account.address = _addr + ENKRYPT_HANDLER;
-          }
-          _accounts.push(_account);
-        });
-        if (_accounts.length) {
-          wallet.accounts = _accounts;
-        }
-        if (!wallet?.selectedChain?.address?.includes(ENKRYPT_HANDLER)) {
-          let address = wallet.selectedChain.address;
-          address = this.aes256Encrypt(address);
-          wallet.selectedChain = {
-            ...wallet.selectedChain,
-            address: address + ENKRYPT_HANDLER,
-          };
-        }
-      });
-    }
+    console.log("_data", _data);
     try {
       return await browserStorage.set("data", _data);
     } catch {
@@ -246,7 +223,7 @@ export class Store {
 
   async addWalletAddress(walletAddress: Array<IWalletController>) {
     const _dataExist = await this.extensionDataExist();
-    if (_dataExist.status && _dataExist.data) {
+    if (_dataExist.data) {
       _dataExist.data.WalletController = [...walletAddress];
       await this.setLocalStore(_dataExist.data);
     } else {
@@ -319,10 +296,12 @@ export class Store {
     if (_dataExist.status && _dataExist.data) {
       _dataExist.data.OnboardingController.firstTimeFlowType = flow;
       await this.setLocalStore(_dataExist.data);
+      return true;
     } else {
       const _data = DEFAULT_EXTENSION_DATA;
       _data.OnboardingController.firstTimeFlowType = flow;
       this.setLocalStore(_data);
+      return true;
     }
   }
 

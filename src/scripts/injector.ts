@@ -37,7 +37,7 @@ if (window && window.ethereum) {
 
 ethProvider.requestInternalMethods({ method: "isDefaultWallet" }).then((isDefaultWallet) => {
   let finalProvider: EthereumProvider | null = null;
-  if ((isDefaultWallet ) || !cacheOtherEthProvider) {
+  if (isDefaultWallet || !cacheOtherEthProvider) {
     finalProvider = safeEthProvider;
     try {
       Object.defineProperty(window, "ethereum", {

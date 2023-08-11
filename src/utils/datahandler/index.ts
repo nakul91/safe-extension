@@ -31,18 +31,19 @@ export default class ExtensionData {
     if (_dataExist.status && _dataExist.data) {
       _dataExist.data.OnboardingController.firstTimeFlowType = flow;
       await BrowserStorageApi.setStorageLocal("data", _dataExist.data);
+      return true;
     } else {
       const _data = DEFAULT_EXTENSION_DATA;
       _data.OnboardingController.firstTimeFlowType = flow;
       this.setDefaultData(_data);
+      return true;
     }
   }
-
 
   async setDefaultData(predefinedData = DEFAULT_EXTENSION_DATA) {
     await BrowserStorageApi.setStorageLocal("data", predefinedData);
   }
- 
+
   async updateIsIBCGuideViewed(isIBCGuideViewed: boolean) {
     const _dataExist = await extensionDataExist();
     if (_dataExist.status && _dataExist.data) {
@@ -54,7 +55,7 @@ export default class ExtensionData {
       this.setDefaultData(_data);
     }
   }
-  
+
   async addWalletAddress(walletAddress: Array<IWalletController>) {
     const _dataExist = await extensionDataExist();
     if (_dataExist.status && _dataExist.data) {
@@ -66,19 +67,4 @@ export default class ExtensionData {
       this.setDefaultData(_data);
     }
   }
-
-  
-
-
- 
-  
-
- 
- 
-
-  
-
- 
-
-  
 }
