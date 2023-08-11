@@ -97,7 +97,7 @@ function reducer(state: TInitialStateType, action: TActionType) {
     case ACTIONS.SET_AUTH_MODALPACK:
       return {
         ...state,
-        safeAddress: action.payload as any,
+        web3AuthModalPack: action.payload as any,
       };
     default:
       return state;
