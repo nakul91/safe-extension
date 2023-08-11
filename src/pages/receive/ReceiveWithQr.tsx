@@ -14,7 +14,7 @@ const ReceiveWithQr: FC<TReceiveWithQRTypes> = ({ walletAddress}) => {
         width: 240,
         height: 240,
         type: "svg",
-        image: getImage( "front_logo.svg"),
+        image: getImage( "safe_base.png"),
         margin: 5,
         qrOptions: {
             typeNumber: 0,
@@ -65,46 +65,6 @@ const ReceiveWithQr: FC<TReceiveWithQRTypes> = ({ walletAddress}) => {
             <p className="label2 text-text-500 pt-2">
                 {"Scan to receive"}
             </p>
-            {/* {chainConfig.showBech32Address() ? (
-                <div className="flex pt-2.5">
-                    <IconButton
-                        type="button"
-                        className={`${
-                            addressId === 0
-                                ? "btn-primary border border-primary-700 hover:border-primary-900"
-                                : " text-gray-500 bg-white border border-gray-300"
-                        } text-sm py-2 px-1.5 rounded-l-full w-12`}
-                        onClick={() => {
-                            if (addressId === 1) {
-                                handleUpdateAddress(addressType);
-                                setAddressId(0);
-                            }
-                        }}
-                    >
-                        {walletAddress.startsWith("0x")
-                            ? HEX_ADDR
-                            : capitalizeFirstLetter(chainConfig.getChainHrp())}
-                    </IconButton>
-                    <IconButton
-                        type="button"
-                        className={`${
-                            addressId === 1
-                                ? "btn-primary border border-primary-700 hover:border-primary-900"
-                                : " text-gray-500 bg-white border border-gray-300"
-                        } text-sm py-2 px-1.5 rounded-r-full w-12`}
-                        onClick={() => {
-                            if (addressId === 0) {
-                                handleUpdateAddress(addressType);
-                                setAddressId(1);
-                            }
-                        }}
-                    >
-                        {walletAddress.startsWith("0x")
-                            ? capitalizeFirstLetter(chainConfig.getChainHrp())
-                            : HEX_ADDR}
-                    </IconButton>
-                </div>
-            ) : null} */}
             <div ref={ref} />
             <div className="px-1 text-center">
                 <span className="py-2 label2 text-text-500 break-all">{addressType}</span>

@@ -9,6 +9,9 @@ import ReceiveWithQr from "../ReceiveWithQr";
 const ReceiveContainer: FC = () => {
     const [searchParams] = useSearchParams();
     const isFullscreen = searchParams.get("fullscreen");
+    const {
+        state: { safeAddress },
+      } = useContext(GlobalContext);
     return (
         <>
             <div
@@ -16,16 +19,16 @@ const ReceiveContainer: FC = () => {
                     isFullscreen ? "h-screen" : "h-150"
                 }`}
             >
-                <ConnectionHeader
+                {/* <ConnectionHeader
                     headerColor={""}
                     walletName={"Base"}
-                    walletAddress={""}
+                    walletAddress={"0x74d3352e3fd9220615f205d9ba26a026287d5521"}
                     connectionIcon={""}
                     connectionName={""}
-                />
+                /> */}
                 <ActionHeader title={"Receive"} />
                 <ReceiveWithQr
-                    walletAddress={""}
+                    walletAddress={safeAddress}
                 />
             </div>
         </>
