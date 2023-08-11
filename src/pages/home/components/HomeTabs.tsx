@@ -21,7 +21,7 @@ export enum TABS_NAMES {
 }
 
 const HomeTabs: FC<any> = (props) => {
-  const { walletBalances, tokenLoading, getWalletBalance, activityData } = props;
+  const { walletBalances, tokenLoading, getWalletBalance, activityData, activitiesLoader } = props;
   const [activeTab, setActiveTab] = useState(TABS_NAMES.TOKENS as string);
   const [tabs, setTabs] = useState<ITabsType[]>();
   const [isLastTxn, setIsLastTxn] = useState(true);
@@ -116,6 +116,7 @@ const HomeTabs: FC<any> = (props) => {
             pageSize={20}
             setActiveTab={setActiveTab}
             activityData={activityData}
+            activitiesLoader={activitiesLoader}
           />
         )}
       </div>

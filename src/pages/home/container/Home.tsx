@@ -99,7 +99,12 @@ export default function Home() {
           </div>
         </div>
         <ActionsTab />
-        <HomeTabs walletBalances={walletBalances} tokenLoading={tokenLoading} activityData={activityData} />
+        <HomeTabs
+          walletBalances={walletBalances}
+          tokenLoading={tokenLoading}
+          activityData={activityData}
+          activitiesLoader={activitiesLoader}
+        />
       </div>
     </div>
   );
