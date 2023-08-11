@@ -13,6 +13,7 @@ import {
 import { ITokenListType, TTokenTypes } from "../types";
 import { Shimmer } from ".";
 import { DEFAULT_EVM_CONTRACT_DECIMALS } from "../../../constants";
+import NoState from "../../../ui_components/NoState";
 
 const TokenList: FC<TTokenTypes> = (props) => {
   const { walletBalances, tokenLoading } = props;
@@ -33,7 +34,14 @@ const TokenList: FC<TTokenTypes> = (props) => {
       {tokenLoading ? (
         <Shimmer type="tokenList" />
       ) : tokenList.length === 0 ? (
-        <p className="text-center">No tokens</p>
+        <NoState
+        className="h-20 w-35 my-6"
+        image={
+          "no_state.svg" 
+        }
+        title={"No Token's yet"}
+        titleClassName="label2 text-text-500"
+    />
       ) : (
         tokenList.map((token, key) => {
           if (!token.contract_name) return;

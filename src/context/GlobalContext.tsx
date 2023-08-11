@@ -70,6 +70,7 @@ const initialState: TInitialStateType = {
   toastLists: [],
   safeAddress: "",
   web3AuthModalPack: undefined,
+  tokensList: [],
 };
 
 export type TGlobalContextType = {
@@ -87,17 +88,16 @@ function reducer(state: TInitialStateType, action: TActionType) {
     case ACTIONS.SHOW_TOAST: {
       const payload = action.payload as TToastType;
       if (payload.toastType === "error") {
-        if (state.toastLists.filter((toast: TToastType) => toast.toastType === "error").length < 1) {
+        if (
+          state.toastLists.filter(
+            (toast: TToastType) => toast.toastType === "error"
+          ).length < 1
+        ) {
           return {
             ...state,
             toastLists: [
               ...state.toastLists,
-              ...[
-                {
-                  message: payload.message,
-                  toastType: payload.toastType,
-                },
-              ],
+              ...[{ message: payload.message, toastType: payload.toastType }],
             ],
           };
         } else {
@@ -134,6 +134,12 @@ function reducer(state: TInitialStateType, action: TActionType) {
         ...state,
         web3AuthModalPack: action.payload as any,
       };
+      case ACTIONS.SET_TOKENS_LIST: {
+        return {
+          ...state,
+          tokensList: action.payload as Array<ITokenListType>,
+        };
+      }
     default:
       return state;
   }

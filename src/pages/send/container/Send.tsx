@@ -1,8 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useContext } from "react";
 import { BaseGoerli } from "../../../constants/chains/baseGoerli";
 import InputField from "../InputField";
-import { getImage } from "../../../utils";
+import {
+    getImage,
+    getTokenFormattedNumber,
+    getTokenValueFormatted,
+    shortenAddress,
+  } from "../../../utils";
+  import SelectToken, {
+    TSelectedTokenType,
+  } from "../../home/components/SelectToken";
+  import { GlobalContext } from "../../../context/GlobalContext";
 
 export default function Send() {
   const [inputText, setInputText] = useState("");
@@ -15,8 +24,16 @@ export default function Send() {
     username: "",
     address: "",
   });
+  const {
+    state: { tokensList },
+  } = useContext(GlobalContext);
 
   const [showInsufficientBalance, setShowInsufficientBalance] = useState(false);
+
+  const [selectToken, setSelectToken] = useState(false);
+  const [selectedToken, setSelectedToken] = useState<TSelectedTokenType>(
+    tokensList[0]
+  );
 
   const navigate = useNavigate();
 
@@ -27,6 +44,11 @@ export default function Send() {
       address: "",
     });
   };
+
+  const {
+    state: { safeAddress },
+    dispatch,
+  } = useContext(GlobalContext);
 
   const handleAddressInput = (key: string, value: string) => {
     setSendFormData((inputValues) => ({
@@ -52,9 +74,9 @@ export default function Send() {
         style={{ backgroundColor: "blue" }}
         className={`flex justify-between items-center px-4 py-2 w-105 z-10`}
       >
-        <div>
-          <p className="text-black text-xs">{"demo wallet"}</p>
-          <p className="text-black text-xs">{"wallet address"}</p>
+            <div>
+          <p className="text-black text-xs">{"Your Wallet"}</p>
+          <p className="text-black text-xs">{shortenAddress(safeAddress)}</p>
         </div>
         <div className="flex items-center">
           <img className="w-5 h-5 rounded-full" src={BaseGoerli.logo} alt=" " />
@@ -62,7 +84,7 @@ export default function Send() {
         </div>
       </div>
       <div
-        className={`relative flex px-4 justify-center items-center border-b border-neutral-50  w-105 bg-white t dark:bg-neutralDark-50 dark:border-neutralDark-300 h-[80px]`}
+        className={`relative flex px-4 justify-center items-center border-b border-neutral-50  w-105 bg-white t dark:bg-neutralDark-50 dark:border-neutralDark-300 h-[60px]`}
       >
         <img
           role="presentation"
@@ -80,16 +102,30 @@ export default function Send() {
       <div
         role="presentation"
         className="flex items-center justify-between bg-grey-500 py-6 px-4 cursor-pointer dark:bg-neutralDark-300"
-        onClick={() => {}}
+        onClick={() => {
+            setSelectToken(true);
+          }}
       >
-        <div className="flex items-center">
-          <img className="w-6 h-6 rounded-full" src={""} alt={""} />
-          <p>ETH</p>
+        <div className="flex items-center gap-3">
+          <img
+            className="w-6 h-6 rounded-full"
+            src={selectedToken?.logo_url}
+            alt={""}
+          />
+          <p>{selectedToken?.contract_ticker_symbol}</p>
         </div>
 
         <div className="flex items-center ">
           <span className="pr-4 text-base dark:text-textDark-900">
-            {"Bal"}:<span className="ml-1">0.1111</span>
+          {"Bal"}:
+            <span className="ml-1">
+              {getTokenValueFormatted(
+                getTokenFormattedNumber(
+                  `${selectedToken?.balance}`,
+                  Number(selectedToken?.contract_decimals)
+                )
+              )}
+            </span>
           </span>
         </div>
       </div>
@@ -117,16 +153,13 @@ export default function Send() {
                 noMargin={true}
               />
             </div>
-            <div>
-              <p className="text-text-300 text-sm">{""}:</p>
-            </div>
           </div>
         </div>
 
         <div className="relative border-b border-b-neutral-50 dark:border-neutralDark-300">
           <img
             src={getImage("divider_icon.svg")}
-            className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-6 h-6"
+            className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-6 h-6 z-[1]"
             alt="icon"
           />
         </div>
@@ -171,6 +204,11 @@ export default function Send() {
           </div>
         )}
       </form>
+      <SelectToken
+        selectToken={selectToken}
+        setSelectToken={setSelectToken}
+        setSelectedToken={setSelectedToken}
+      />
     </>
   );
 }

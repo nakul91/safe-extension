@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import NoState from "../../../ui_components/NoState";
 import ActivitiesListItem from "./ActivitiesListItem";
 import Shimmer from "./Shimmer";
 
@@ -17,7 +18,14 @@ const ActivitiesList: FC<any> = (props) => {
       {activitiesLoader ? (
         <Shimmer type="activitiesList" />
       ) : activities.length === 0 ? (
-        <p className="text-center">No activities</p>
+        <NoState
+        className="h-20 w-35 my-6"
+        image={
+          "no_state.svg" 
+        }
+        title={"No Activities yet"}
+        titleClassName="label2 text-text-500"
+    />
       ) : (
         activities.map((item, key) => <ActivitiesListItem item={item} key={key} fromAddress={selectedAddress} />)
       )}

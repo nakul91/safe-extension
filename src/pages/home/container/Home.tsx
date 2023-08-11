@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { ZERO_USD } from "../../../constants";
-import { GlobalContext } from "../../../context/GlobalContext";
+import { ACTIONS,GlobalContext } from "../../../context/GlobalContext";
 import { getImage, handleCopy, shortenAddress } from "../../../utils";
 import { Header, HomeTabs } from "../components";
 import { ITokenListType } from "../types";
@@ -43,6 +43,10 @@ export default function Home() {
         setWalletBalances(walletTokens);
         setTokenLoading(false);
         setBalance(balance);
+        dispatch({
+          type: ACTIONS.SET_TOKENS_LIST,
+          payload: walletTokens,
+        });
       });
       getAllTransactionApi("base-testnet", safeAddress, page).then((res: any) => {
         if (res.error) {

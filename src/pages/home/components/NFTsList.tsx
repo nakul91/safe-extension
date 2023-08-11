@@ -35,7 +35,7 @@ const NFTsList: FC<any> = (props) => {
               <NoState
                     className="h-20 w-35 my-6"
                     image={
-                      "nft_list_nostate_dark.svg" 
+                      "no_state.svg" 
                     }
                     title={"No NFT's"}
                     titleClassName="label2 text-text-500"
