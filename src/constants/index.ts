@@ -228,6 +228,7 @@ export interface IWalletController {
   path?: string;
   walletMode?: TFirstTimeFlow;
   recentlySelectedChains?: Array<Partial<ISelectedChain>>;
+  address?: string;
 }
 export interface IContacts {
   name: string;
@@ -606,39 +607,12 @@ export const getTestNetCardColor = (walletHex: string) => {
   return { bg, border, lineColor, hueDeg };
 };
 
-export const DEFAULT_EXTENSION_DATA: IExtensionData = {
+export const DEFAULT_EXTENSION_DATA: any = {
   OnboardingController: {
-    completedOnboarding: false,
+    completedOnboarding: true,
     firstTimeFlowType: "create",
-    seedPhraseBackedUp: false,
   },
-  crypto: {},
-  fcmToken: "",
-  deviceId: "",
   WalletController: [],
-  PreferencesController: {
-    currentLocale: LANGUAGE_CODES.ENGLISH,
-    identities: {},
-    preferences: {
-      useNativeCurrencyAsPrimaryCurrency: true,
-    },
-    selectedAddress: "",
-    theme: "light",
-    isDarkTheme: false,
-    canOverrideWallet: false,
-    lastTransactionId: "",
-    passTicket: "",
-  },
-  SettingsController: {
-    contacts: [],
-    autoLockTimer: AUTOLOCK_VALUE.FIFTEEN_MINS,
-  },
-  customNetworks: [],
-  editedNetworks: [],
-  customTokens: {},
-  recentlySelectedChains: [] as Array<Partial<ISelectedChain>>,
-  // Setting this to default true since the overlay is not working well. To be removed later
-  isIBCGuideViewed: true,
   version: EXT_CURRENT_VERSION,
 };
 

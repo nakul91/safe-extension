@@ -34,7 +34,7 @@ class InternalRequest {
     let chainStatus = CHAIN_STATUS.NOT_EXIST;
     const _chainIdCheck = isStartsFrom0x(chainIdCheck) ? String(hexToNumber(chainIdCheck)) : chainIdCheck;
     const chainAccounts = (await walletController.getCurrentWallet()).accounts;
-    chainAccounts.forEach(({ chainId, status }) => {
+    chainAccounts.forEach(({ chainId, status }: { chainId: string; status: string }) => {
       const _chainId = isStartsFrom0x(chainId) ? String(hexToNumber(chainId)) : chainId;
       if (_chainId == _chainIdCheck) {
         chainStatus = status ? CHAIN_STATUS.EXIST : CHAIN_STATUS.DISABLED;

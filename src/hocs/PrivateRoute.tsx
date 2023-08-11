@@ -5,6 +5,7 @@ import { Web3AuthModalPack } from "@safe-global/auth-kit";
 import { modalConfig, web3AuthConfig, web3AuthOptions } from "../constants/chains/baseGoerli";
 import { getSafes } from "../pages/utils";
 import { ACTIONS, GlobalContext } from "../context/GlobalContext";
+import { useWallet } from "../context/WalletContext";
 
 interface IProps {
   children: ReactElement;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
+  const wallet = useWallet();
   const navigate = useNavigate();
   const { dispatch } = useContext(GlobalContext);
 
@@ -32,7 +34,11 @@ const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
           type: ACTIONS.SET_SAFE_ADDRESS,
           payload: safeAddress,
         });
-
+        const existingData = await wallet.getData();
+        if (!existingData?.WalletController?.length) {
+          await wallet?.setFirstTimeFlow("create");
+          await wallet?.addWalletAddress([{ address: safeAddress }]);
+        }
         dispatch({
           type: ACTIONS.SET_AUTH_MODALPACK,
           payload: web3AuthModalPack,

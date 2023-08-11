@@ -150,6 +150,7 @@ class EthereumProvider extends EventEmitter {
   net_version = () => this.request({ method: "net_version" });
 
   private _request = async (data: any) => {
+    console.log("request data", data);
     if (!data) {
       throw ethErrors.rpc.invalidRequest();
     }
@@ -183,7 +184,6 @@ class EthereumProvider extends EventEmitter {
   request = async (data: any) => {
     if ([ETHEREUM_REQUESTS.requestAccounts, ETHEREUM_REQUESTS.accounts]?.includes(data.method)) {
       const ethereumChainDetails = this.chainList.find(({ id }) => id === "ethereum");
-
       const isCurrentChainEvmBased = await this.requestInternalMethods({
         sender: COMMUNICATION_PAGES.internalRequest,
         data: {},

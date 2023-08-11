@@ -66,7 +66,7 @@ class WalletController {
   }
 
   getCurrentWallet = () => {
-    return storeService.getCurrentWallet() as Promise<IWalletController>;
+    return storeService.getCurrentWallet() as any;
   };
 
   setStoreWalletData = (data: IExtensionData) => {
