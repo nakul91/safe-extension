@@ -21,7 +21,7 @@ export enum TABS_NAMES {
 }
 
 const HomeTabs: FC<any> = (props) => {
-  const { walletBalances, tokenLoading, getWalletBalance } = props;
+  const { walletBalances, tokenLoading, getWalletBalance, activityData } = props;
   const [activeTab, setActiveTab] = useState(TABS_NAMES.TOKENS as string);
   const [tabs, setTabs] = useState<ITabsType[]>();
   const [isLastTxn, setIsLastTxn] = useState(true);
@@ -111,11 +111,11 @@ const HomeTabs: FC<any> = (props) => {
         {activeTab === TABS_NAMES.NFTS && <NFTsList walletBalances={walletBalances} loader={tokenLoading} />}
         {activeTab === TABS_NAMES.ACTIVITIES && (
           <ActivitiesList
-            setIsTxnLoadingError={setIsTxnLoadingError}
             selectedChain={BaseGoerli.blockchain}
             selectedAddress={safeAddress}
             pageSize={20}
             setActiveTab={setActiveTab}
+            activityData={activityData}
           />
         )}
       </div>

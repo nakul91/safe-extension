@@ -32,6 +32,12 @@ const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
           type: ACTIONS.SET_SAFE_ADDRESS,
           payload: safeAddress,
         });
+
+        dispatch({
+          type: ACTIONS.SET_AUTH_MODALPACK,
+          payload: web3AuthModalPack,
+        });
+
         setState({
           isLoggedIn: true,
           loader: false,
