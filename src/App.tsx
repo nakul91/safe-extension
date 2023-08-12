@@ -8,6 +8,7 @@ import PrivateRoute from "./hocs/PrivateRoute";
 import { sendRoutes } from "./pages/send/sendRoutes";
 import { receieveRoutes } from "./pages/receive/receiveRoutes";
 import { approvalsRoutes } from "./pages/approvals/approvalsRoutes";
+import ToastMessage from "./ui_components/ToastMessage";
 
 const App: FC = () => {
   const location = useLocation();
@@ -44,6 +45,7 @@ const App: FC = () => {
                 </Fragment>
               ))}
             </Routes>
+            <ToastMessage />
           </>
         </WalletHoc>
       </GlobalContextProvider>

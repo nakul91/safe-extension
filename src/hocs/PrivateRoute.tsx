@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { CHAIN_LIST } from "../constants/chains";
 import { Web3AuthModalPack } from "@safe-global/auth-kit";
 import { modalConfig, web3AuthConfig, web3AuthOptions } from "../constants/chains/baseGoerli";
@@ -14,6 +14,7 @@ import { getSafes } from "../pages/utils";
 import { ACTIONS, GlobalContext } from "../context/GlobalContext";
 import { useWallet } from "../context/WalletContext";
 import { ethers } from "ethers";
+import { Login } from "../pages/login/container/Login";
 
 interface IProps {
   children: ReactElement;

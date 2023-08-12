@@ -79,6 +79,17 @@ body.dark {
   scrollbar-width: none; /* Firefox */
 }
 
+
+.copy-icon-wrapper .active-icon {
+    display: none;
+  }
+  .copy-icon-wrapper:hover .active-icon {
+    display: inline-block;
+  }
+  .copy-icon-wrapper:hover .default-icon {
+    display: none;
+  }
+
 @layer components {
   .heading1 {
     @apply font-sans text-xxl font-light leading-12 tracking-tight text-text-900 dark:text-textDark-900;

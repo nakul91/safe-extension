@@ -26,7 +26,7 @@ const Header: FC = () => {
   return (
     <>
       <div className="pt-2 pb-2 fixed w-[420px] z-20 bg-white px-5">
-       <img src={getImage("safe_base.png")} alt="header safe logo" />
+       <img src={getImage("safe_base.png")} alt="header safe logo" className="h-6 my-6" />
       </div>
     </>
   );

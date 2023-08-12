@@ -67,23 +67,32 @@ export default function Home() {
       }`}
     >
       <Header />
-      <div className={`relative mt-16`}>
+      <div className={`relative mt-[68px]`}>
       <div className={`px-4 pt-2 -mt-1 portfolioCardWrapper pb-4`}>
           <div className="flex flex-col relative portfolioCard">
             <AnimatePresence>
             <div className={`rounded-xl px-4 py-4 bg-[#4E32C2]`}>
                 <div className="mb-4">
                   <p className="sub-title text-grey-500/90 pb-2">Smart Account</p>
-                  <p className="label3 text-neutral-50/40 flex gap-2">
+                  <p
+                    role={"presentation"}
+                    className={`label3 copy-icon-wrapper text-neutral-50/40 dark:text-neutral-50/40 flex gap-2  hover:text-neutral-50 dark:hover:text-neutral-50 cursor-pointer`}
+                    onClick={() => {
+                      handleCopy(safeAddress);
+                    }}
+                  >
                     <span>{shortenAddress(safeAddress)}</span>
                     <img
-                    role="presentation"
-                    src={getImage("copy_light_grey.svg")}
-                    alt=" "
-                    className="cursor-pointer"
-                    onClick={() => handleCopy(safeAddress)}
+                      src={getImage("copy_grey.svg")}
+                      alt="copy"
+                      className="default-icon"
                     />
-                  </p>
+                    <img
+                      src={getImage("copy_light_grey.svg")}
+                      alt="copy"
+                      className="active-icon"
+                    />
+                    </p>
                 </div>
                 <div className="flex items-center mt-4">
                   <img
