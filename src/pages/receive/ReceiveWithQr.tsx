@@ -14,7 +14,7 @@ const ReceiveWithQr: FC<TReceiveWithQRTypes> = ({ walletAddress}) => {
         width: 240,
         height: 240,
         type: "svg",
-        image: getImage( "safe_base.png"),
+        image: getImage( "SafeBase_img.png"),
         margin: 5,
         qrOptions: {
             typeNumber: 0,
@@ -23,7 +23,7 @@ const ReceiveWithQr: FC<TReceiveWithQRTypes> = ({ walletAddress}) => {
         },
         dotsOptions: {
             type: "extra-rounded",
-            color: "",
+            color: "#FFFFFF",
         },
         imageOptions: {
             hideBackgroundDots: true,
@@ -32,7 +32,7 @@ const ReceiveWithQr: FC<TReceiveWithQRTypes> = ({ walletAddress}) => {
             crossOrigin: "anonymous",
         },
         backgroundOptions: {
-            color:  "",
+            color: "",
         },
     });
     const ref = useRef<HTMLDivElement | null>(null);
@@ -62,18 +62,18 @@ const ReceiveWithQr: FC<TReceiveWithQRTypes> = ({ walletAddress}) => {
 
     return (
         <div className="flex flex-col justify-center items-center pt-[109px] px-4">
-            <p className="label2 text-text-500 pt-2">
+            <p className="label2 text-textDark-900 pt-2">
                 {"Scan to receive"}
             </p>
             <div ref={ref} />
             <div className="px-1 text-center">
-                <span className="py-2 label2 text-text-500 break-all">{addressType}</span>
+                <span className="py-2 label2 text-textDark-900 break-all">{addressType}</span>
             </div>
-            <p className="label2 text-text-500 py-2">
+            <p className="label2 text-textDark-900 py-2">
                 {"Copy Address"}
             </p>
             <div className="flex p-2 w-48 mx-9 rounded border border-dashed border-gray-300">
-                <span className="grow self-center text-center dark:text-textDark-900">
+                <span className="grow self-center text-center text-textDark-900">
                     {shortenAddress(addressType)}
                 </span>
                 <img

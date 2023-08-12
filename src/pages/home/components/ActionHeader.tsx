@@ -27,7 +27,7 @@ const ActionHeader: FC<THeaderTypes> = (props) => {
         <div
             className={` ${
                 className ? className : ""
-            } flex px-4 justify-center items-center border-b border-neutral-50 fixed w-105 bg-white top-13 z-10 dark:bg-neutralDark-50 dark:border-neutralDark-300`}
+            } flex px-4 justify-center items-center border-b fixed w-105 z-10 bg-neutralDark-50 border-neutralDark-300`}
         >
             <img
                 role="presentation"
@@ -39,7 +39,7 @@ const ActionHeader: FC<THeaderTypes> = (props) => {
             <p
                 className={` ${
                     titleClassName ? titleClassName : ""
-                } sub-title py-4 dark:text-textDark-900`}
+                } sub-title py-4 text-textDark-900`}
             >
                 {title}
             </p>
