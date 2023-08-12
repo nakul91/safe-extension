@@ -10,12 +10,14 @@ export enum ACTIONS {
   SET_SAFE_ADDRESS = "SET_SAFE_ADDRESS",
   SET_AUTH_MODALPACK = "SET_AUTH_MODALPACK",
   SET_TOKENS_LIST = "SET_TOKENS_LIST",
+  SET_PROVIDER="SET_PROVIDER",
 }
 
 export type TInitialStateType = {
   toastLists: Array<TToastType> | [];
   safeAddress: string;
   web3AuthModalPack: any;
+  provider:any;
   tokensList: Array<ITokenListType> | [];
 };
 
@@ -71,6 +73,7 @@ const initialState: TInitialStateType = {
   safeAddress: "",
   web3AuthModalPack: undefined,
   tokensList: [],
+  provider:undefined,
 };
 
 export type TGlobalContextType = {
@@ -138,6 +141,12 @@ function reducer(state: TInitialStateType, action: TActionType) {
         return {
           ...state,
           tokensList: action.payload as Array<ITokenListType>,
+        };
+      }
+      case ACTIONS.SET_PROVIDER: {
+        return {
+          ...state,
+          provider: action.payload as any,
         };
       }
     default:

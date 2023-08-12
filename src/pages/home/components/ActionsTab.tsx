@@ -8,36 +8,21 @@ const ActionsTab: FC<TActionsTab> = (props) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className={`flex items-center mx-[22px] justify-between`}>
-
-                       <IconButton
-                            type="button"
-                            className={`flex flex-col items-center label3 outline-0 dark:text-textDark-700 text-text-500`}
-                            leftIcon={
-                                <img
-                                    src={getImage(`action_send.svg`)}
-                                    alt={"divider_icon"}
-                                    className="w-10 mb-2"
-                                />
-                            }
-                            onClick={() => navigate("/send")}
-                        >
-                          Send
-                        </IconButton>
-                        <IconButton
-                            type="button"
-                            className={`flex flex-col items-center label3 outline-0 dark:text-textDark-700 text-text-500`}
-                            leftIcon={
-                                <img
-                                    src={getImage(`action_recieve.svg`)}
-                                    alt={"divider_icon"}
-                                    className="w-10 mb-2"
-                                />
-                            }
-                            onClick={() => navigate("/receive")}
-                        >
-                          Receive
-                        </IconButton>
+      <div className={`flex items-center mx-[22px] justify-center gap-0 mb-3`}>
+        <div
+          className={`bg-[#29D79F] px-4 py-2 rounded-l-full border border-black flex gap-2 items-center justify-center border-r-0 cursor-pointer`}
+          onClick={() => navigate("/send")}
+        >
+          <img src={getImage("arrow_up.svg")} alt="arrow up" />
+          <p className="text-black">Send</p>
+        </div>
+        <div
+          className={`bg-[#29D79F] px-4 py-2 rounded-r-full border border-black flex gap-2 items-center justify-center cursor-pointer`}
+          onClick={() => navigate("/receive")}
+        >
+          <img src={getImage("arrow_down.svg")} alt="arrow down" />
+          <p className="text-black">Recieve</p>
+        </div>
       </div>
     </>
   );

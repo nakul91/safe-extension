@@ -16,28 +16,30 @@ const App: FC = () => {
   const isOnboardingScreen = location.pathname.includes("/welcome");
 
   return (
-    <div
-      className={`${
-        !isOnboardingScreen && isFullscreen
-          ? "fullscreenView"
-          : isOnboardingScreen
-          ? "extensionView extensionViewMaxWidthContent"
-          : "extensionView"
-      }`}
-    >
+    <div className={`extensionView ${isFullscreen ? "h-screen" : "h-150"}`}>
       <GlobalContextProvider>
         <WalletHoc>
           <>
             <Routes>
-              {[...onboardingRoutes, ...sendRoutes, ...receieveRoutes].map(({ path, element, key }, index) => (
-                <Fragment key={index}>
-                  <Route path={path} element={element} key={key} />
-                </Fragment>
-              ))}
+            {[...onboardingRoutes, ...sendRoutes, ...receieveRoutes].map(
+                ({ path, element, key }, index) => (
+                  <Fragment key={index}>
+                    <Route path={path} element={element} key={key} />
+                  </Fragment>
+                )
+              )}
               {[...homeRoutes, ...approvalsRoutes].map(({ path, element, key }, index) => (
                 <Fragment key={index}>
-                  <Route element={<PrivateRoute path={path}>{element}</PrivateRoute>}>
-                    <Route path={path} element={<PrivateRoute path={path}>{element}</PrivateRoute>} key={key} />
+                  <Route
+                    element={<PrivateRoute path={path}>{element}</PrivateRoute>}
+                  >
+                    <Route
+                      path={path}
+                      element={
+                        <PrivateRoute path={path}>{element}</PrivateRoute>
+                      }
+                      key={key}
+                    />
                   </Route>
                 </Fragment>
               ))}

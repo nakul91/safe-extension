@@ -62,21 +62,16 @@ export default function Home() {
 
   return (
     <div
-      className={`relative overflow-y-scroll hide-scrollbar extensionWidth bg-white dark:bg-neutralDark-50 ${
+    className={`relative overflow-y-scroll hide-scrollbar extensionWidth${
         isFullscreen ? "h-screen" : "h-150 "
       }`}
     >
       <Header />
       <div className={`relative mt-16`}>
-        <div className={`px-4 pt-2 -mt-1 portfolioCardWrapper dark:bg-neutralDark-300 pb-4`}>
+      <div className={`px-4 pt-2 -mt-1 portfolioCardWrapper pb-4`}>
           <div className="flex flex-col relative portfolioCard">
             <AnimatePresence>
-              <div
-                className={`rounded-xl px-4 py-4 portfolioCardBack`}
-                style={{
-                  background: "#FF0000",
-                }}
-              >
+            <div className={`rounded-xl px-4 py-4 bg-[#4E32C2]`}>
                 <div className="mb-4">
                   <p className="sub-title text-grey-500/90 pb-2">Smart Account</p>
                   <p className="label3 text-neutral-50/40 flex gap-2">

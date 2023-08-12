@@ -131,7 +131,7 @@ const SelectToken: FC<TSelectTokenTypes> = (props) => {
                   leaveFrom="translate-y-0"
                   leaveTo="translate-y-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto w-105 top-0 bg-white rounded-t-2xl z-20 dark:bg-neutralDark-50">
+                  <Dialog.Panel className="pointer-events-auto w-105 top-0 bg-black rounded-t-2xl z-20 dark:bg-neutralDark-50">
                     <div className="flex items-center px-4 relative mt-2 mb-5 border-b border-neutral-50 dark:border-neutralDark-300">
                       <div>
                         <img
@@ -142,7 +142,7 @@ const SelectToken: FC<TSelectTokenTypes> = (props) => {
                           onClick={handleCloseDialog}
                         />
                       </div>
-                      <p className="text-black py-2.5">Select Token</p>
+                      <p className="text-white py-2.5">Select Token</p>
                     </div>
                     <div className="flex justify-between relative pb-2 mx-4 items-center border-b border-neutral-50 dark:border-neutralDark-300">
                       <p className="text-xs uppercase text-text-300">
@@ -169,7 +169,7 @@ const SelectToken: FC<TSelectTokenTypes> = (props) => {
                             <p>{_token.contract_ticker_symbol}</p>
                           </div>
                           <div className="flex justify-center items-center">
-                            <p>
+                          <p className="text-white text-[16px] leading-5">
                               {getTokenValueFormatted(
                                 getTokenFormattedNumber(
                                   `${_token.balance}`,

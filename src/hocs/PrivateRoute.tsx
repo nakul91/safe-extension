@@ -1,4 +1,11 @@
-import { FC, ReactElement, useContext, useEffect, useMemo, useState } from "react";
+import {
+  FC,
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CHAIN_LIST } from "../constants/chains";
 import { Web3AuthModalPack } from "@safe-global/auth-kit";
@@ -13,10 +20,14 @@ interface IProps {
   path: string;
 }
 
+
 const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
   const wallet = useWallet();
   const navigate = useNavigate();
   const { dispatch } = useContext(GlobalContext);
+
+  const [loggedInClicked, setLoggedInClicked] = useState(false);
+const [loading, setLoading] = useState(false);
 
   const [state, setState] = useState({
     isLoggedIn: false,
@@ -61,11 +72,19 @@ const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
         });
       } else {
         await web3AuthModalPack.signOut();
-        await signIn();
+        setState({
+          isLoggedIn: false,
+          loader: false,
+        });
       }
     } catch {
       await signIn();
+
     }
+  };
+
+  const handleClick = async () => {
+    await signIn();
   };
 
   const signIn = async () => {
@@ -79,18 +98,22 @@ const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
     isUserLoggedIn();
   }, [path]);
 
+  const [searchParams] = useSearchParams();
+  const isFullscreen = searchParams.get("fullscreen");
+
   return state.loader ? (
-    <div className="">
-      <p>loading...</p>
+    <div
+    className={`relative overflow-y-scroll hide-scrollbar extensionWidth flex items-center justify-center ${
+      isFullscreen ? "h-screen" : "h-150 "
+    }`}
+  >
+    <div className="spinnerLoader"></div>
     </div>
   ) : state.isLoggedIn ? (
     children
   ) : (
     <>
-      {navigate({
-        pathname: "/singin",
-        search: location.search,
-      })}
+      <Login handleClick={handleClick} from="extension" />
     </>
   );
 };

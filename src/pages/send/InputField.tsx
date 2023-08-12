@@ -77,7 +77,7 @@ const InputField: FC<TInputFieldProps> = (props) => {
         type={type}
         id={id}
         name={name}
-        className={`pl-0 pt-2 pb-1 border-none dark:bg-transparent text-text-900 dark:text-textDark-900 placeholder-text-300 dark:placeholder-textDark-300 text-base rounded-lg block w-full focus:outline-none focus:ring-transparent ${
+        className={`pl-0 pt-2 pb-1 border-none bg-black/5 dark:bg-transparent text-text-100 dark:text-textDark-900 placeholder-text-500 dark:placeholder-textDark-300 text-base rounded-lg block w-full focus:outline-none focus:ring-transparent ${
           className ? className : ""
         }`}
         placeholder={placeholder}

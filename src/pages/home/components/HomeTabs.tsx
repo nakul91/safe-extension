@@ -69,13 +69,12 @@ const HomeTabs: FC<any> = (props) => {
       <ul
         className={`${tabState ? "homeTwoTab" : "homeTab"} flex ${
           singleTabState ? "" : "items-center justify-center sticky"
-        } top-14 bg-white dark:bg-neutralDark-300 z-10 w-full`}
-      >
+        } top-14 z-10 w-full`} >
         <li
           role={"presentation"}
           className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2  cursor-pointer ${
             activeTab === TABS_NAMES.TOKENS
-              ? "text-primary-700 dark:text-primaryDark-700 active border-primary-700"
+              ? "text-[#29D79F] active border-[#29D79F]"
               : "text-text-500 dark:text-textDark-700"
           }`}
           onClick={() => handleTabChange(TABS_NAMES.TOKENS)}
@@ -86,7 +85,9 @@ const HomeTabs: FC<any> = (props) => {
         <li
           role={"presentation"}
           className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2 cursor-pointer ${
-            activeTab === TABS_NAMES.NFTS ? "text-primary-700  active border-primary-700" : "text-text-500 "
+            activeTab === TABS_NAMES.NFTS
+            ? "text-[#29D79F]  active border-[#29D79F]"
+            : "text-text-500 "
           }`}
           onClick={() => handleTabChange(TABS_NAMES.NFTS)}
           onKeyDown={() => handleTabChange(TABS_NAMES.NFTS)}
@@ -96,7 +97,9 @@ const HomeTabs: FC<any> = (props) => {
         <li
           role={"presentation"}
           className={`justify-center homeTabList w-1/3 flex py-3 label2 border-b-2 cursor-pointer ${
-            activeTab === TABS_NAMES.ACTIVITIES ? "text-primary-700  active border-primary-700" : "text-text-500"
+            activeTab === TABS_NAMES.ACTIVITIES
+              ? "text-[#29D79F]  active border-[#29D79F]"
+              : "text-text-500"
           }`}
           onClick={() => handleTabChange(TABS_NAMES.ACTIVITIES)}
           onKeyDown={() => handleTabChange(TABS_NAMES.ACTIVITIES)}
@@ -105,10 +108,16 @@ const HomeTabs: FC<any> = (props) => {
         </li>
       </ul>
       <div className="pb-16">
-        {activeTab === TABS_NAMES.TOKENS && (
-          <TokenList walletBalances={walletBalances} tokenLoading={tokenLoading} getWalletBalance={getWalletBalance} />
+      {activeTab === TABS_NAMES.TOKENS && (
+          <TokenList
+            walletBalances={walletBalances}
+            tokenLoading={tokenLoading}
+            getWalletBalance={getWalletBalance}
+          />
         )}
-        {activeTab === TABS_NAMES.NFTS && <NFTsList walletBalances={walletBalances} loader={tokenLoading} />}
+        {activeTab === TABS_NAMES.NFTS && (
+          <NFTsList walletBalances={walletBalances} loader={tokenLoading} />
+        )}
         {activeTab === TABS_NAMES.ACTIVITIES && (
           <ActivitiesList
             selectedChain={BaseGoerli.blockchain}

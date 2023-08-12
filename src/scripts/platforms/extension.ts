@@ -103,7 +103,7 @@ export default class ExtensionPlatform {
     if (route) {
       extensionURL += `#${route}`;
     } else {
-      extensionURL += `#/welcome`;
+      extensionURL += `#/signin?fullscreen=true`;
     }
 
     if (queryString) {
