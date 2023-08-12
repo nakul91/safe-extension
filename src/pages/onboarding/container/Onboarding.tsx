@@ -8,6 +8,7 @@ import { ACTIONS, GlobalContext } from "../../../context/GlobalContext";
 import { getSafes } from "../../utils";
 import { useWallet } from "../../../context/WalletContext";
 import { Login } from "../../login/container/Login";
+import { sign } from "crypto";
 
 export default function Onboarding() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -54,6 +55,10 @@ export default function Onboarding() {
   const handleClick = () => {
     signIn();
   };
+
+  useEffect(() => {
+    signIn();
+  }, []);
 
   return (
     <>

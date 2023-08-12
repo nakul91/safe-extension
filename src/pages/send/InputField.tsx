@@ -30,6 +30,7 @@ export type TInputFieldProps = {
   onKeyPress?: (event: KeyboardEvent<HTMLInputElement>) => void;
   autofocus?: boolean;
   disabled?: boolean;
+  inputMode?: string;
 };
 
 const InputField: FC<TInputFieldProps> = (props) => {
@@ -54,6 +55,7 @@ const InputField: FC<TInputFieldProps> = (props) => {
     onKeyPress,
     autofocus,
     disabled,
+    inputMode,
   } = props;
 
   return (

@@ -15,6 +15,7 @@ import { ACTIONS, GlobalContext } from "../context/GlobalContext";
 import { useWallet } from "../context/WalletContext";
 import { ethers } from "ethers";
 import { Login } from "../pages/login/container/Login";
+import { getFromLocalStorage, saveToLocalStorage } from "../utils";
 
 interface IProps {
   children: ReactElement;
@@ -25,7 +26,10 @@ interface IProps {
 const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
   const wallet = useWallet();
   const navigate = useNavigate();
-  const { dispatch } = useContext(GlobalContext);
+  const {
+    dispatch,
+    state: { safeAddress },
+  } = useContext(GlobalContext);
 
   const [loggedInClicked, setLoggedInClicked] = useState(false);
 const [loading, setLoading] = useState(false);
@@ -43,24 +47,12 @@ const [loading, setLoading] = useState(false);
       const userInfo = await web3AuthModalPack.getUserInfo();
       if (userInfo && userInfo.email) {
         const safeAddress = await getSafes(web3AuthModalPack);
-        if (web3AuthModalPack?.getProvider()) {
-          //@ts-ignore
-          const safeProvider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider());
-          const provider = web3AuthModalPack.getProvider() as any;
-          const prvKey = await safeProvider?.send("private_key", []);
-          wallet?.setPvtKey(prvKey);
-        }
+        saveToLocalStorage("safe_address", safeAddress);
 
         dispatch({
           type: ACTIONS.SET_SAFE_ADDRESS,
           payload: safeAddress,
         });
-
-        const existingData = await wallet.getData();
-        if (!existingData?.WalletController?.length) {
-          await wallet?.setFirstTimeFlow("create");
-          await wallet?.addWalletAddress([{ address: safeAddress }]);
-        }
 
         dispatch({
           type: ACTIONS.SET_AUTH_MODALPACK,
@@ -79,7 +71,10 @@ const [loading, setLoading] = useState(false);
         });
       }
     } catch {
-      await signIn();
+      setState({
+        isLoggedIn: false,
+        loader: false,
+      });
 
     }
   };
@@ -96,13 +91,40 @@ const [loading, setLoading] = useState(false);
   };
 
   useEffect(() => {
-    isUserLoggedIn();
+    async function initializeSafe() {
+      const add = getFromLocalStorage("safe_address");
+      if (!add) {
+        isUserLoggedIn();
+      }
+      if (add !== null && !safeAddress) {
+        dispatch({
+          type: ACTIONS.SET_SAFE_ADDRESS,
+          payload: add,
+        });
+      }
+      if (add) {
+        console.log("came to provider addition");
+
+        await web3AuthModalPack.init({
+          options: web3AuthOptions,
+          adapters: undefined,
+          modalConfig,
+        });
+        dispatch({
+          type: ACTIONS.SET_PROVIDER,
+          payload: web3AuthModalPack.getProvider(),
+        });
+      }
+    }
+    initializeSafe();
   }, [path]);
 
   const [searchParams] = useSearchParams();
   const isFullscreen = searchParams.get("fullscreen");
 
-  return state.loader ? (
+  return getFromLocalStorage("safe_address") ? (
+    children
+  ) : state.loader ? (
     <div
     className={`relative overflow-y-scroll hide-scrollbar extensionWidth flex items-center justify-center ${
       isFullscreen ? "h-screen" : "h-150 "

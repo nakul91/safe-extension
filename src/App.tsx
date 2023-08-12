@@ -17,7 +17,7 @@ const App: FC = () => {
   const isOnboardingScreen = location.pathname.includes("/welcome");
 
   return (
-    <div className={`extensionView ${isFullscreen ? "h-screen" : "h-150"}`}>
+    <div className={`extensionView ${isFullscreen ? "fullscreenView" : "extensionView"}`}>
       <GlobalContextProvider>
         <WalletHoc>
           <>

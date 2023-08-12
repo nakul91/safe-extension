@@ -667,3 +667,32 @@ export const getTransactionTypeName = (type: string) => {
       return capitalizeFirstLetter(type);
   }
 };
+
+export const saveToLocalStorage = (key: any, value: any) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Error saving to localStorage:", error);
+  }
+};
+
+const removeFromLocalStorage = (key: any) => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error("Error removing from localStorage:", error);
+  }
+};
+
+export const getFromLocalStorage = (key: any) => {
+  try {
+    const storedValue = localStorage.getItem(key);
+    if (storedValue !== null) {
+      return JSON.parse(storedValue);
+    }
+    return null;
+  } catch (error) {
+    console.error("Error getting from localStorage:", error);
+    return null;
+  }
+};

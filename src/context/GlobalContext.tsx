@@ -2,6 +2,7 @@ import { createContext, Dispatch, ReactNode, useReducer } from "react";
 
 import { IChainTypes } from "../constants/chains";
 import { saveStore } from "../store/GlobalStore";
+import { ExternalProvider } from "@ethersproject/providers/lib/web3-provider";
 
 export enum ACTIONS {
   CLEAR_TOAST = "CLEAR_TOAST",
@@ -17,7 +18,7 @@ export type TInitialStateType = {
   toastLists: Array<TToastType> | [];
   safeAddress: string;
   web3AuthModalPack: any;
-  provider:any;
+  provider:ExternalProvider;
   tokensList: Array<ITokenListType> | [];
 };
 
@@ -73,7 +74,7 @@ const initialState: TInitialStateType = {
   safeAddress: "",
   web3AuthModalPack: undefined,
   tokensList: [],
-  provider:undefined,
+  provider:{},
 };
 
 export type TGlobalContextType = {
@@ -146,7 +147,7 @@ function reducer(state: TInitialStateType, action: TActionType) {
       case ACTIONS.SET_PROVIDER: {
         return {
           ...state,
-          provider: action.payload as any,
+          provider: action.payload as ExternalProvider,
         };
       }
     default:
