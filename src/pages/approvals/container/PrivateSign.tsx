@@ -86,12 +86,12 @@ export default function PrivateSign({ params }: any) {
   }, []);
 
   return (
-    <div className="relative flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen bg-white">
       <ApprovalsHeader {...walletDetail} />
 
       <div className="relative">
         <div className="px-4 py-4 pb-4">
-          <h1 className="leading-12 mr-4 heading2">Sign Message Consent</h1>
+          <h1 className="leading-12 mr-4 heading2 text-black">Sign Message Consent</h1>
         </div>
 
         <div className="mx-4">
@@ -125,8 +125,8 @@ export default function PrivateSign({ params }: any) {
             ) : null}
             <p className={`label2 break-all text-black dark:text-textDark-700 text-sm whitespace-pre-line`}>
               <div className="p-4">
-                <p className="mb-2.5">Message:</p>
-                <p>{params.decodedMessage}</p>
+              <p className="mb-2.5 text-black">Message:</p>
+                <p className="text-black">{params.decodedMessage}</p>
               </div>
             </p>
           </div>

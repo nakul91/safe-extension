@@ -120,6 +120,21 @@ export default function Home() {
           activityData={activityData}
           activitiesLoader={activitiesLoader}
         />
+        <div className="fixed bottom-1 w-full">
+          <div className="flex items-center justify-between pl-1">
+            <div className="flex gap-2 justify-center items-center">
+              <p className="inline text-[12px] text-white">Powered by: </p>
+              <img src={getImage("safe.svg")} alt="" />
+              <p className="inline text-[12px] text-white">|</p>
+              <img src={getImage("covalent_white.svg")} alt="" />
+            </div>
+            <div className="flex gap-2 justify-center items-center pr-1">
+              <p className="text-[12px] text-white">Built on:</p>
+              <img src={getImage("base_logo.svg")} alt="" />
+              <p className="text-[12px] font-medium text-white">Base Görli</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

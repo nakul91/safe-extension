@@ -9,6 +9,7 @@ import ExtensionData from "../../../utils/datahandler";
 import { Shimmer } from "./";
 import { TConnectionInfoTypes } from "../types";
 import WalletSwitch from "./WalletSwitch";
+import { BaseGoerli } from "../../../constants/chains/baseGoerli";
 
 const DappConnectionInfo: FC<TConnectionInfoTypes> = ({
   name,
@@ -75,7 +76,7 @@ const DappConnectionInfo: FC<TConnectionInfoTypes> = ({
           className="w-full px-4 py-4 flex items-center 
              border-b border-neutral-50 dark:border-neutralDark-300"
         >
-          <img src={getImage("favicon.svg")} alt="" className="w-8 h-8 mr-2" />
+          <img src={BaseGoerli.logo} alt="" className="w-8 h-8 mr-2" />
           <span
             className="relative text-sm font-medium leading-3.5 text-text-900 dark:text-textDark-900 tracking-tight cursor-pointer pr-6"
             onClick={() => setOpenSwitchWallet(true)}
@@ -83,13 +84,13 @@ const DappConnectionInfo: FC<TConnectionInfoTypes> = ({
             role="presentation"
           >
             {walletName}{" "}
-            <img className="w-4 h-4 absolute right-0 top-0" src={getImage("chevron_down_dark_grey.svg")} alt="icon" />
           </span>
           {walletBalanceShimmer ? (
             <Shimmer type="WalletBalance" />
           ) : (
             <div className="ml-auto font-normal text-sm text-text-900 dark:text-textDark-900 leading-4 tracking-tight flex">
-              <span className="opacity-40 mr-1">Bal:</span> <span>{walletBalance}</span>
+              <span className="opacity-40 mr-1">Bal:</span>{" "}
+               <span>{walletBalance}</span>
             </div>
           )}
         </div>

@@ -87,7 +87,7 @@ export default function Send() {
                 const relayPack = new GelatoRelayPack(
                     "qbec0fcMKxOAXM0qyxL6cDMX_aaJUmSPPAJUIEg17kU_",
                 );
-
+                console.log("provider",provider);
                 const fromEthProvider = new ethers.providers.Web3Provider(provider);
                 const fromSigner = await fromEthProvider.getSigner();
                 const safeAccountAbstraction = new AccountAbstraction(fromSigner);
@@ -234,19 +234,19 @@ const handleTransactionStatus = (hash: string) => {
         <div className="mb-11">
           <div className="flex justify-between items-baseline">
             <div className="px-2">
-              <InputField
-                name="amount"
+            <input
+                name={"amount"}
+                inputMode="decimal"
                 type="number"
+                className="text-xxl bg-black border-none text-white/40 focus:outline-none focus:ring-transparent"
+                placeholder={"0.00"}
+                autoFocus={true}
                 value={sendFormData.amount}
-                placeholder="0.00"
-                min="0"
-                step="any"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   handleInputChange(e);
                   setInputText(e.target.value);
                 }}
-                className="text-xxl"
-                noMargin={true}
+                onWheel={() => (document.activeElement as HTMLElement).blur()}
               />
             </div>
           </div>

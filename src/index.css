@@ -90,6 +90,14 @@ body.dark {
     display: none;
   }
 
+  .approve-btn-primary {
+    @apply py-4 px-5 relative bg-secondary-700 text-base text-textDark-900 leading-4 tracking-tight font-medium rounded-xl hover:bg-secondary-900 focus:outline-none disabled:opacity-50;
+}
+
+.approve-btn-secondary {
+    @apply py-4 px-5 bg-error-700 text-textDark-900 leading-4 tracking-tight font-medium rounded-xl hover:bg-error-900  focus:outline-none disabled:opacity-50;
+}
+
 @layer components {
   .heading1 {
     @apply font-sans text-xxl font-light leading-12 tracking-tight text-text-900 dark:text-textDark-900;

@@ -29,8 +29,21 @@ export const Login: FC<ILogin> = (props) => {
           <p className="font-normal text-[32px] leading-10 text-white">
             The wallet for <br /> everyone{" "}
           </p>
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-2">
+            <div className="flex gap-2 justify-center items-center">
+              <p className="inline text-[12px] text-white">Powered by: </p>
+              <img src={getImage("safe.svg")} alt="" />
+              <p className="inline text-[12px] text-white">|</p>
+              <img src={getImage("covalent_white.svg")} alt="" className="" />
+            </div>
+            <div className="flex gap-2 justify-center items-center mt-2">
+              <p className="text-[12px] text-white">Built on:</p>
+              <img src={getImage("base_logo.svg")} alt="" />
+              <p className="text-[12px] font-medium text-white">Base Görli</p>
+            </div>
+          </div>
           <div
-            className={`bg-black left-0 right-0 bottom-0 h-20 dark:bg-neutralDark-50`}
+            className={`bg-black absolute left-0 right-0 bottom-16 h-12 dark:bg-neutralDark-50`}
           >
             {showButton ? (
               <p className="absolute left-0 right-0 bottom-4 font-normal text-[24px] leading-10 text-teal-500">

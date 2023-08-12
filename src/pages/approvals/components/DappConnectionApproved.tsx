@@ -10,20 +10,19 @@ const DappConnectionApproved: FC<TDappConnectionApproved> = ({ icon, name }) => 
   const closeComponent = () => wallet.closeWindow.apply(null);
   useTimeout(closeComponent, INT_DEFAULT_TIMEOUT);
   return (
-    <div className="relative h-150 flex flex-col items-center">
+    <div className="relative h-[700px] flex flex-col items-center bg-white">
       <div className="mt-32 flex">
         <img
-          src={getImage("favicon.svg")}
-          alt="frontier"
-          width={72}
-          height={72}
+          src={getImage("safe_base_logo.png")}
+          alt="safe logo"
+          width={100}
           className="mr-8 rounded-full object-cover"
         />
 
         <img src={getImage("linked.gif")} alt="frontier" width={72} height={36} className="mr-8 dark:hidden" />
         <img
           src={getImage("linked_dark.gif")}
-          alt="frontier"
+          alt="link success"
           width={72}
           height={36}
           className="mr-8 hidden dark:block"
@@ -41,7 +40,9 @@ const DappConnectionApproved: FC<TDappConnectionApproved> = ({ icon, name }) => 
         />
       </div>
       <div className="mt-12 text-center">
-        <h2 className="text-xxl text-text-900 dark:text-textDark-900 font-light leading-12">Connected</h2>
+      <h2 className="text-xxl text-text-900 dark:text-textDark-900 font-light leading-12">
+          Connected
+        </h2>
         <p className="font-normal text-base text-text-900 dark:text-textDark-900 leading-5 opacity-40 mt-2">
           Your wallet is now connected with the site
         </p>

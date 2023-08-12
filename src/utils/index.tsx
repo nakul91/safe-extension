@@ -638,6 +638,12 @@ export const getWindowTimeout = (icon: string | null) => {
   return 2000;
 };
 
+export const returnEthValue = (value: number) => {
+  let ethValue = value*1848.44;
+
+  return ethValue;
+};
+
 export const nftURLFormatter = (nft: any) => {
   let imageURL = nft?.external_data?.image ? nft?.external_data?.image : nft?.token_url;
   console.log("imageURL", imageURL);

@@ -9,6 +9,7 @@ import {
   getTokenFormattedNumber,
   getTokenValueFormatted,
   isPositiveValue,
+  returnEthValue,
 } from "../../../utils";
 import { ITokenListType, TTokenTypes } from "../types";
 import { Shimmer } from ".";
@@ -77,7 +78,7 @@ const TokenList: FC<TTokenTypes> = (props) => {
                     {token.contract_ticker_symbol}
                   </p>
                   <p className="label2 text-text-500 dark:text-textDark-700">
-                    {getCurrencyFormattedNumber(token.quote_rate)}
+                    {getCurrencyFormattedNumber(token.contract_ticker_symbol=="ETH"? returnEthValue(getTokenFormattedNumber(`${token.balance}`, token.contract_decimals)):token.quote_rate)}
                   </p>
                 </div>
               </div>

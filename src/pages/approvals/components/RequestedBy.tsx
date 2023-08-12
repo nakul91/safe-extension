@@ -19,7 +19,7 @@ const RequestedBy: FC<TRequestedByTypes> = (props) => {
           alt=""
         />
         <div className="ml-1 break-all flex flex-col items-end">
-          <p className="self-start text-sm text-text-900 dark:text-textDark-900">
+          <p className="self-start text-sm text-text-300 dark:text-textDark-900">
             {truncateText(originName.replace(/(^\w+:|^)\/\//, ""), CHAR_COUNT.TWENTY_TWO)}{" "}
           </p>
           {originUrl && (

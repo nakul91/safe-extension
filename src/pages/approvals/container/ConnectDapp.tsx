@@ -105,7 +105,7 @@ export default function ConnectDapp({ params, chainId }: TConnectDapp) {
   return connected ? (
     <DappConnectionApproved name={params.name} icon={params.icon} />
   ) : (
-    <div className="relative flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen bg-white">
       <ApprovalsHeader {...walletDetail} />
       <>
         <div className="grow relative">
@@ -131,13 +131,13 @@ export default function ConnectDapp({ params, chainId }: TConnectDapp) {
             <h3 className="opacity-40">This site will be able to:</h3>
 
             <p className="opacity-80 flex items-center mt-6">
-              <img src={getImage("eye_open_primary.svg")} alt="eye open" />
+              <img src={getImage("eye_open_primary.svg")} alt="eye open" className="w-8 h-8" />
 
               <span className="ml-2">View your wallet balance, address and activities</span>
             </p>
 
             <p className="opacity-80 flex items-center mt-4">
-              <img src={getImage("checkmark_icon_primary.svg")} alt="checkmark" />
+              <img src={getImage("checkmark_icon_primary.svg")} alt="checkmark" className="w-8 h-8" />
               <span className="ml-2">Request approval for transactions</span>
             </p>
           </div>
