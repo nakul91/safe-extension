@@ -8,6 +8,7 @@ import ReceiveWithQr from "../ReceiveWithQr";
 
 const ReceiveContainer: FC = () => {
     const [searchParams] = useSearchParams();
+    console.log("Update")
     const isFullscreen = searchParams.get("fullscreen");
     const {
         state: { safeAddress },

@@ -271,12 +271,12 @@ const handleTransactionStatus = (hash: string) => {
         ) : (
           <div>
             <div
-              style={{ backgroundColor: "blue" }}
+              style={{ backgroundColor: "black" }}
               className={`flex justify-between items-center px-4 py-2 w-105 z-10`}
             >
               <div>
-                <p className="text-black text-xs">{"Your Wallet"}</p>
-                <p className="text-black text-xs">
+                <p className="text-white text-xs">{"Your Wallet"}</p>
+                <p className="text-white text-xs">
                   {shortenAddress(safeAddress)}
                 </p>
               </div>

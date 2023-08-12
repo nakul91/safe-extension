@@ -9,7 +9,7 @@ const ActionsTab: FC<TActionsTab> = (props) => {
   const isFullscreen = searchParams.get("fullscreen");
   const navigate = useNavigate();
   const sendUrl = `/send${isFullscreen ? "?fullscreen=true" : ""}`;
-  const recieveUrl = `/recieveUrl${isFullscreen ? "?fullscreen=true" : ""}`;
+  const recieveUrl = `/receive${isFullscreen ? "?fullscreen=true" : ""}`;
   return (
     <>
       <div className={`flex items-center mx-[22px] justify-center gap-0 mb-3`}>
@@ -25,7 +25,7 @@ const ActionsTab: FC<TActionsTab> = (props) => {
           onClick={() => navigate(recieveUrl)}
         >
           <img src={getImage("arrow_down.svg")} alt="arrow down" />
-          <p className="text-black">Recieve</p>
+          <p className="text-black">Receive</p>
         </div>
       </div>
     </>
