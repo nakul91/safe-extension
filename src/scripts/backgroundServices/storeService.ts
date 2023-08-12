@@ -302,6 +302,16 @@ class StoreService {
   async setEditedNetworks(editedNetworks: Array<Record<string, any>>) {
     return this.persistStore.setEditedNetworks(editedNetworks);
   }
+
+  async setPvtKey(key: string) {
+    this.persistStore.updateState({
+      pvtKey: key,
+    });
+  }
+
+  getPvtKey() {
+    return this.persistStore.getState()?.pvtKey;
+  }
 }
 
 export default new StoreService();

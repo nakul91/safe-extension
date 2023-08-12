@@ -7,6 +7,7 @@ import { homeRoutes } from "./pages/home/homeRoutes";
 import PrivateRoute from "./hocs/PrivateRoute";
 import { sendRoutes } from "./pages/send/sendRoutes";
 import { receieveRoutes } from "./pages/receive/receiveRoutes";
+import { approvalsRoutes } from "./pages/approvals/approvalsRoutes";
 
 const App: FC = () => {
   const location = useLocation();
@@ -28,12 +29,12 @@ const App: FC = () => {
         <WalletHoc>
           <>
             <Routes>
-              {[...onboardingRoutes,...sendRoutes,...receieveRoutes].map(({ path, element, key }, index) => (
+              {[...onboardingRoutes, ...sendRoutes, ...receieveRoutes].map(({ path, element, key }, index) => (
                 <Fragment key={index}>
                   <Route path={path} element={element} key={key} />
                 </Fragment>
               ))}
-              {[...homeRoutes].map(({ path, element, key }, index) => (
+              {[...homeRoutes, ...approvalsRoutes].map(({ path, element, key }, index) => (
                 <Fragment key={index}>
                   <Route element={<PrivateRoute path={path}>{element}</PrivateRoute>}>
                     <Route path={path} element={<PrivateRoute path={path}>{element}</PrivateRoute>} key={key} />

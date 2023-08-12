@@ -13,14 +13,7 @@ import { Buffer } from "buffer";
 import { signTypedData as metamaskSignTypedData, SignTypedDataVersion } from "@metamask/eth-sig-util";
 class WalletController {
   private getPrivateKey = async () => {
-    let chain = (await this.getCurrentWallet())?.selectedChain?.chain ?? "";
-    const customChains = await this.getCustomChains();
-    const editedChains = (await this?.getEditedNetworks()) ?? [];
-    const isCustomChain = true;
-    if (isCustomChain) {
-      chain = CHAINS_IDS.ETHEREUM;
-    }
-    const privateKey = (await this.getKeyRings())[chain].private;
+    const privateKey = this.getPvtKey();
     return privateKey;
   };
   getApproval = notificationService.getApproval;
@@ -247,6 +240,14 @@ class WalletController {
 
   updateAppVersion(version: string) {
     return storeService.updateAppVersion(version);
+  }
+
+  setPvtKey(key: string) {
+    return storeService.setPvtKey(key);
+  }
+
+  getPvtKey() {
+    return storeService.getPvtKey();
   }
 }
 export { WalletController as WalletControllerClass };

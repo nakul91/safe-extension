@@ -25,11 +25,8 @@ class ProviderController {
 
   ethAccounts = async (params: { origin: string }) => {
     if (params.origin) {
-      const {
-        selectedChain: { address, chain },
-      } = await walletController?.getSelectedWallet();
-
-      return [address.toLowerCase()];
+      const address = await walletController?.getSelectedWallet();
+      return [address?.address?.toLowerCase()];
     } else {
       return [];
     }
@@ -51,27 +48,14 @@ class ProviderController {
   };
 
   ethChainId = async () => {
-    const chain = (await walletController.getCurrentWallet())?.selectedChain?.chain ?? "";
-    const customChains = await walletController.getCustomChains();
-    const editedChains = await walletController.getEditedNetworks();
-    if (!chain) {
-      console.error("Chain Id doesn't exist");
-    }
-    const chainId = "0x0";
-    if (chainId.startsWith("0x0")) {
-      return chainId.replace("0x0", "0x");
-    }
+    const chainId = "0x14a33";
     return chainId;
   };
 
   netVersion = async () => {
-    const chain = (await walletController.getCurrentWallet())?.selectedChain?.chain ?? "";
-    const customChains = await walletController.getCustomChains();
-    const editedChains = await walletController.getEditedNetworks();
-    if (!chain) {
-      console.error("Network Version doesn't exist");
-    }
+    return "84531";
   };
+
   ethBlockNumber = () => this.generalEthRpc(ETHEREUM_REQUESTS.blockNumber, []);
   ethGetBalance = async (params: Array<Record<string, string>>) =>
     this.generalEthRpc(ETHEREUM_REQUESTS.getBalance, params);

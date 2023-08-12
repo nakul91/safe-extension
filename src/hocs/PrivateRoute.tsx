@@ -6,6 +6,7 @@ import { modalConfig, web3AuthConfig, web3AuthOptions } from "../constants/chain
 import { getSafes } from "../pages/utils";
 import { ACTIONS, GlobalContext } from "../context/GlobalContext";
 import { useWallet } from "../context/WalletContext";
+import { ethers } from "ethers";
 
 interface IProps {
   children: ReactElement;
@@ -30,15 +31,25 @@ const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
       const userInfo = await web3AuthModalPack.getUserInfo();
       if (userInfo && userInfo.email) {
         const safeAddress = await getSafes(web3AuthModalPack);
+        if (web3AuthModalPack?.getProvider()) {
+          //@ts-ignore
+          const safeProvider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider());
+          const provider = web3AuthModalPack.getProvider() as any;
+          const prvKey = await safeProvider?.send("private_key", []);
+          wallet?.setPvtKey(prvKey);
+        }
+
         dispatch({
           type: ACTIONS.SET_SAFE_ADDRESS,
           payload: safeAddress,
         });
+
         const existingData = await wallet.getData();
         if (!existingData?.WalletController?.length) {
           await wallet?.setFirstTimeFlow("create");
           await wallet?.addWalletAddress([{ address: safeAddress }]);
         }
+
         dispatch({
           type: ACTIONS.SET_AUTH_MODALPACK,
           payload: web3AuthModalPack,

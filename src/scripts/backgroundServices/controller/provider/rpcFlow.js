@@ -67,12 +67,11 @@ const flowContext = flow
       ]?.includes(method)
     ) {
       const currentWallet = await walletController.getCurrentWallet();
-
       return new Promise((resolve, reject) => {
         if (walletController.siteApproved(origin)) {
           walletController?.getSelectedWallet().then(async (res) => {
             if (res) {
-              resolve([currentWallet.selectedChain.address?.toLowerCase()]);
+              resolve([currentWallet.address?.toLowerCase()]);
             }
           });
         } else {
@@ -97,7 +96,7 @@ const flowContext = flow
               } catch (err) {
                 console.error(err);
               }
-              resolve([currentWallet.selectedChain.address?.toLowerCase()]);
+              resolve([currentWallet.address?.toLowerCase()]);
             })
             .catch((err) => {
               console.log("rpc rejection", true);
@@ -248,9 +247,6 @@ const flowContext = flow
         ETHEREUM_REQUESTS.signTypedDataV1,
         ETHEREUM_REQUESTS.signTypedDataV3,
         ETHEREUM_REQUESTS.signTypedDataV4,
-        SOLANA_REQUESTS.signMessage,
-        COSMOS_REQUESTS.signArbitrary,
-        SUI_REQUESTS.signMessage,
       ]?.includes(method)
     ) {
       return new Promise((resolve, reject) => {

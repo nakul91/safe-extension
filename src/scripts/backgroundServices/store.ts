@@ -78,7 +78,7 @@ export class Store {
     const data: any = await this.getLocalStore();
     if (data && data.WalletController) {
       const { WalletController } = data;
-      const selectedWallet = WalletController.find((wallet: IWalletController) => wallet.isSelected);
+      const selectedWallet = WalletController?.[0];
       if (selectedWallet) {
         return selectedWallet;
       }
