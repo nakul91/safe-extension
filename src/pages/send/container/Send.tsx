@@ -1,32 +1,16 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChangeEvent, useState, useContext } from "react";
-import {
-  BaseGoerli,
-  web3AuthConfig,
-  web3AuthOptions,
-  modalConfig,
-} from "../../../constants/chains/baseGoerli";
+import { BaseGoerli, web3AuthConfig, web3AuthOptions, modalConfig } from "../../../constants/chains/baseGoerli";
 import InputField from "../InputField";
 import AccountAbstraction from "@safe-global/account-abstraction-kit-poc";
 import { EthersAdapter } from "@safe-global/protocol-kit";
 import { SafeAccountConfig, SafeFactory } from "@safe-global/protocol-kit";
 import { GelatoRelayPack } from "@safe-global/relay-kit";
 import ReactTyped from "react-typed";
-import {
-    MetaTransactionData,
-    MetaTransactionOptions,
-    OperationType,
-} from "@safe-global/safe-core-sdk-types";
-import {
-    getImage,
-    getTokenFormattedNumber,
-    getTokenValueFormatted,
-    shortenAddress,
-  } from "../../../utils";
-  import SelectToken, {
-    TSelectedTokenType,
-  } from "../../home/components/SelectToken";
-  import { GlobalContext } from "../../../context/GlobalContext";
+import { MetaTransactionData, MetaTransactionOptions, OperationType } from "@safe-global/safe-core-sdk-types";
+import { getImage, getTokenFormattedNumber, getTokenValueFormatted, shortenAddress } from "../../../utils";
+import SelectToken, { TSelectedTokenType } from "../../home/components/SelectToken";
+import { GlobalContext } from "../../../context/GlobalContext";
 import { ethers } from "ethers";
 import { getRelayTransactionStatus } from "../../home/apiServices";
 import { parseEther } from "ethers/lib/utils";
@@ -53,9 +37,7 @@ export default function Send() {
   const [showInsufficientBalance, setShowInsufficientBalance] = useState(false);
 
   const [selectToken, setSelectToken] = useState(false);
-  const [selectedToken, setSelectedToken] = useState<TSelectedTokenType>(
-    tokensList[0]
-  );
+  const [selectedToken, setSelectedToken] = useState<TSelectedTokenType>(tokensList[0]);
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [isSucceed, setIsSucceed] = useState(false);
 
@@ -97,10 +79,9 @@ export default function Send() {
     setSendFormData((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
-
   const SendRelay = async () => {
     setTransactionLoading(true);
-    setLoadingText("Initialing the Web3 Auth Modal Pack");
+    setLoadingText("Transaction processing...");
     const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
     await web3AuthModalPack.init({
       options: web3AuthOptions,
@@ -108,26 +89,14 @@ export default function Send() {
       modalConfig,
     });
     try {
-      const safeProvider = new ethers.providers.Web3Provider(
-        web3AuthModalPack.getProvider()!
-      );
+      const safeProvider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider()!);
       const prvKey = await safeProvider?.send("private_key", []);
-      const ethersProvider = new ethers.providers.JsonRpcProvider(
-        BaseGoerli.info.rpc
-      );
-
-      setLoadingText("Setting up Gelato Relay Pack");
-      const relayPack = new GelatoRelayPack(
-        "qbec0fcMKxOAXM0qyxL6cDMX_aaJUmSPPAJUIEg17kU_"
-      );
-      const fromEthProvider = new ethers.providers.JsonRpcProvider(
-        BaseGoerli.info.rpc
-      );
+      const ethersProvider = new ethers.providers.JsonRpcProvider(BaseGoerli.info.rpc);
+      const relayPack = new GelatoRelayPack("qbec0fcMKxOAXM0qyxL6cDMX_aaJUmSPPAJUIEg17kU_");
+      const fromEthProvider = new ethers.providers.JsonRpcProvider(BaseGoerli.info.rpc);
       const fromSigner = new ethers.Wallet(prvKey, ethersProvider);
-      setLoadingText("Setting up Account Abstraction...");
       const safeAccountAbstraction = new AccountAbstraction(fromSigner);
       await safeAccountAbstraction.init({ relayPack });
-      setLoadingText("Preparing Safe transaction data");
       const safeTransactionData: MetaTransactionData = {
         to: sendFormData.toAddress,
         data: "0x",
@@ -139,11 +108,7 @@ export default function Send() {
         isSponsored: true,
       };
       //Relay the transaction using Account Abstraction
-      setLoadingText("Transaction processing has started...");
-      const gelatoTaskId = await safeAccountAbstraction.relayTransaction(
-        [safeTransactionData],
-        options
-      );
+      const gelatoTaskId = await safeAccountAbstraction.relayTransaction([safeTransactionData], options);
       if (gelatoTaskId) {
         setLoadingText("Transaction Submitted");
         handleTransactionStatus(gelatoTaskId);
@@ -154,44 +119,42 @@ export default function Send() {
     }
   };
 
-const handleTransactionStatus = (hash: string) => {
-  setLoadingText("Verifying Transaction Status...");
+  const handleTransactionStatus = (hash: string) => {
+    setLoadingText("Verifying Transaction Status...");
     const intervalInMilliseconds = 2000;
     const interval = setInterval(() => {
       getRelayTransactionStatus(hash)
-      .then((res: any) => {
-        if (res) {
-          console.log(res, "res");
-          const task = res.data.task;
-          if (task) {
-            if (task.taskState === "ExecSuccess") {
-              setExplorerUrl(
-                `https://goerli.basescan.org/tx/${task.transactionHash}`
-              );
-              setLoadingText("Success! Transaction Processed");
-              setIsSucceed(true);
+        .then((res: any) => {
+          if (res) {
+            console.log(res, "res");
+            const task = res.data.task;
+            if (task) {
+              if (task.taskState === "ExecSuccess") {
+                setExplorerUrl(`https://goerli.basescan.org/tx/${task.transactionHash}`);
+                setLoadingText("Success! Transaction Processed");
+                setIsSucceed(true);
+                if (interval !== null) {
+                  clearInterval(interval);
+                }
+              }
+            } else {
+              setIsSucceed(false);
+              setLoadingText("Transaction Failed");
               if (interval !== null) {
                 clearInterval(interval);
               }
             }
-          } else {
-            setIsSucceed(false);
-            setLoadingText("Transaction Failed");
-            if (interval !== null) {
-              clearInterval(interval);
-            }
           }
-        }
-      })
-      .catch((e) => {
-        setIsSucceed(false);
-        console.log(e, "e");
-        if (interval !== null) {
-          clearInterval(interval);
-        }
-      });
+        })
+        .catch((e) => {
+          setIsSucceed(false);
+          console.log(e, "e");
+          if (interval !== null) {
+            clearInterval(interval);
+          }
+        });
     }, intervalInMilliseconds);
-};
+  };
 
   return (
     <>
@@ -204,13 +167,7 @@ const handleTransactionStatus = (hash: string) => {
           <div>
             <div className="mt-[110px] text-center">
               {isSucceed ? (
-                <img
-                  width={114}
-                  height={114}
-                  className="mx-auto"
-                  src={getImage("green_circle_check.svg")}
-                  alt=""
-                />
+                <img width={114} height={114} className="mx-auto" src={getImage("green_circle_check.svg")} alt="" />
               ) : (
                 <div className="flex items-center justify-center">
                   <div className="spinnerLoader"></div>
@@ -234,18 +191,10 @@ const handleTransactionStatus = (hash: string) => {
                     <div
                       className="cursor-pointer"
                       onClick={() => {
-                        navigate(
-                          `${
-                            isFullscreen === "true"
-                              ? "/home?fullscreen=true"
-                              : "/home"
-                          }`
-                        );
+                        navigate(`${isFullscreen === "true" ? "/home?fullscreen=true" : "/home"}`);
                       }}
                     >
-                      <p className="text-text-300 label2 text-[16px] mx-12 my-2">
-                        {"<- Go Back"}
-                      </p>
+                      <p className="text-text-300 label2 text-[16px] mx-12 my-2">{"<- Go Back"}</p>
                     </div>
                     <a
                       rel="noreferrer"
@@ -255,12 +204,7 @@ const handleTransactionStatus = (hash: string) => {
                     >
                       {"View in Base Scan"}
                       <span className="ml-2">
-                        <img
-                          width={16}
-                          height={16}
-                          src={getImage("open_outside.svg")}
-                          alt=""
-                        />
+                        <img width={16} height={16} src={getImage("open_outside.svg")} alt="" />
                       </span>
                     </a>
                   </>
@@ -276,16 +220,10 @@ const handleTransactionStatus = (hash: string) => {
             >
               <div>
                 <p className="text-white text-xs">{"Your Wallet"}</p>
-                <p className="text-white text-xs">
-                  {shortenAddress(safeAddress)}
-                </p>
+                <p className="text-white text-xs">{shortenAddress(safeAddress)}</p>
               </div>
               <div className="flex items-center">
-                <img
-                  className="w-5 h-5 rounded-full"
-                  src={BaseGoerli.logo}
-                  alt=" "
-                />
+                <img className="w-5 h-5 rounded-full" src={BaseGoerli.logo} alt=" " />
                 <span className="pl-1 text-white text-sm">{"base"}</span>
               </div>
             </div>
@@ -313,14 +251,8 @@ const handleTransactionStatus = (hash: string) => {
               }}
             >
               <div className="flex items-center gap-3">
-                <img
-                  className="w-6 h-6 rounded-full"
-                  src={selectedToken?.logo_url}
-                  alt={""}
-                />
-                <p className="text-white text-[20px] leading-5">
-                  {selectedToken?.contract_ticker_symbol}
-                </p>
+                <img className="w-6 h-6 rounded-full" src={selectedToken?.logo_url} alt={""} />
+                <p className="text-white text-[20px] leading-5">{selectedToken?.contract_ticker_symbol}</p>
               </div>
 
               <div className="flex items-center ">
@@ -328,10 +260,7 @@ const handleTransactionStatus = (hash: string) => {
                   {"Bal"}:
                   <span className="ml-1 text-white text-[20px] leading-5">
                     {getTokenValueFormatted(
-                      getTokenFormattedNumber(
-                        `${selectedToken?.balance}`,
-                        Number(selectedToken?.contract_decimals)
-                      )
+                      getTokenFormattedNumber(`${selectedToken?.balance}`, Number(selectedToken?.contract_decimals))
                     )}
                   </span>
                 </span>
@@ -364,18 +293,14 @@ const handleTransactionStatus = (hash: string) => {
             </div>
 
             <div>
-              <div
-                className={`flex justify-between items-end mb-8 py-4 relative px-2`}
-              >
+              <div className={`flex justify-between items-end mb-8 py-4 relative px-2`}>
                 <div className="px-2 w-full relative">
                   <InputField
                     placeholder={"wallet address"}
                     label={
                       <>
                         <div className="flex gap-2">
-                          <p className="label2 text-white dark:text-textDark-500">
-                            To
-                          </p>
+                          <p className="label2 text-white dark:text-textDark-500">To</p>
                         </div>
                       </>
                     }
@@ -383,9 +308,7 @@ const handleTransactionStatus = (hash: string) => {
                     value={sendFormData.toAddress}
                     onChange={handleInputChange}
                     noMargin={true}
-                    className={`pt-2 pb-2 pr-[80px] ${
-                      sendFormData.toAddress ? "pr-[36px]" : "pr-[80px]"
-                    }`}
+                    className={`pt-2 pb-2 pr-[80px] ${sendFormData.toAddress ? "pr-[36px]" : "pr-[80px]"}`}
                   />
                 </div>
               </div>
@@ -394,9 +317,7 @@ const handleTransactionStatus = (hash: string) => {
               <div
                 className={`bg-black left-0 right-0 bottom-0 h-20 
                ${isFullscreen ? "absolute" : "sticky"} ${
-                  sendFormData.amount && sendFormData.toAddress
-                    ? "opacity-100"
-                    : "opacity-50"
+                  sendFormData.amount && sendFormData.toAddress ? "opacity-100" : "opacity-50"
                 }`}
               >
                 <button
@@ -405,9 +326,7 @@ const handleTransactionStatus = (hash: string) => {
                   onClick={() => {
                     SendRelay();
                   }}
-                  disabled={
-                    sendFormData.amount && sendFormData.toAddress ? false : true
-                  }
+                  disabled={sendFormData.amount && sendFormData.toAddress ? false : true}
                 >
                   Submit
                 </button>

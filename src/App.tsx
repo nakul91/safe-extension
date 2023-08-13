@@ -22,25 +22,15 @@ const App: FC = () => {
         <WalletHoc>
           <>
             <Routes>
-            {[...onboardingRoutes, ...sendRoutes, ...receieveRoutes].map(
-                ({ path, element, key }, index) => (
-                  <Fragment key={index}>
-                    <Route path={path} element={element} key={key} />
-                  </Fragment>
-                )
-              )}
+              {[...onboardingRoutes, ...sendRoutes, ...receieveRoutes].map(({ path, element, key }, index) => (
+                <Fragment key={index}>
+                  <Route path={path} element={element} key={key} />
+                </Fragment>
+              ))}
               {[...homeRoutes, ...approvalsRoutes].map(({ path, element, key }, index) => (
                 <Fragment key={index}>
-                  <Route
-                    element={<PrivateRoute path={path}>{element}</PrivateRoute>}
-                  >
-                    <Route
-                      path={path}
-                      element={
-                        <PrivateRoute path={path}>{element}</PrivateRoute>
-                      }
-                      key={key}
-                    />
+                  <Route element={<PrivateRoute path={path}>{element}</PrivateRoute>}>
+                    <Route path={path} element={<PrivateRoute path={path}>{element}</PrivateRoute>} key={key} />
                   </Route>
                 </Fragment>
               ))}
