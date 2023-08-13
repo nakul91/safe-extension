@@ -21,9 +21,9 @@ const ActivitiesListItem: FC<any> = (props) => {
 
   useMemo(() => {
     if (item && fromAddress) {
-      if (item.fromAddress == fromAddress) {
+      if (item.from_address == fromAddress) {
         setType(TXN_TYPE.Send);
-      } else if (item.fromAddress != fromAddress) {
+      } else if (item.from_address != fromAddress) {
         setType(TXN_TYPE.Receive);
       } else {
         setType(TXN_TYPE.Smart_Contract);
@@ -41,9 +41,7 @@ const ActivitiesListItem: FC<any> = (props) => {
       >
         <div className="grow w-fit flex relative justify-between items-center">
           <ul className="pl-3">
-            <li className="paragraph1 leading-4 text-white font-medium pb-2 only:pb-0 capitalize">
-              {type}
-            </li>
+            <li className="paragraph1 leading-4 text-white font-medium pb-2 only:pb-0 capitalize">{type}</li>
             <li className="label2 leading-3.5 text-white/70 dark:text-textDark-700">
               {type === TXN_TYPE.Send ? "to" : "from"}:
               <span className="ml-1">
