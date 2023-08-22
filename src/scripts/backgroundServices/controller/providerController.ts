@@ -26,7 +26,7 @@ class ProviderController {
   ethAccounts = async (params: { origin: string }) => {
     if (params.origin) {
       const address = await walletController?.getSelectedWallet();
-      return ["0x2282B6bAbee6889735903D0ED651cb3c2b4A21Ba"];
+      return [address?.address?.toLowerCase()];
     } else {
       return [];
     }

@@ -68,24 +68,26 @@ export default function PrivateSign({ params }: any) {
     });
     try {
       const safeProvider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider()!);
+      const signer = safeProvider.getSigner();
       const [message] = params.messageData;
-      console.log("message", message);
       const hexMessage = hexlify(toUtf8Bytes(message));
-      console.log("hexMessage", hexMessage);
       const ethAdapterOwner = new EthersAdapter({
         ethers,
-        signerOrProvider: safeProvider,
+        signerOrProvider: signer,
       });
       const safeSdk = await Safe.create({
         ethAdapter: ethAdapterOwner,
-        safeAddress: "0x2282B6bAbee6889735903D0ED651cb3c2b4A21Ba",
+        safeAddress: "0x7F8231731492dAB715f1AE2cF692b59aE7449158",
       });
       const signature = await safeSdk.signTransactionHash(hexMessage);
-      await resolveApproval({ resolved: true, signer: signature }, true).then(() => {
+      console.log("signature", signature);
+      debugger;
+      await resolveApproval({ resolved: true, signer: signature.data }, true).then(() => {
         closeComponent();
       });
     } catch (e) {
       console.log("error", e);
+      debugger;
       rejectApproval("Something went wrong", true).then(() => {
         closeComponent();
       });

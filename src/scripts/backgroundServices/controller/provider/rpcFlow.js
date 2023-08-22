@@ -342,7 +342,7 @@ const flowContext = flow
             if (res) {
               let privateMessage;
               if (method === ETHEREUM_REQUESTS.personalSign) {
-                privateMessage = "";
+                privateMessage = res.signer;
               } else if (method === ETHEREUM_REQUESTS.signTypedData) {
                 privateMessage = providerController.ethSignTypedData(params);
               } else if (method === ETHEREUM_REQUESTS.signTypedDataV1) {

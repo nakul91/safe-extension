@@ -30,6 +30,7 @@
     "@safe-global/auth-kit": "^1.2.0",
     "@safe-global/protocol-kit": "^1.2.0",
     "@safe-global/relay-kit": "^1.2.0",
+    "@safe-global/safe-apps-sdk": "^8.1.0",
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@trustwallet/wallet-core": "3.2.8",
