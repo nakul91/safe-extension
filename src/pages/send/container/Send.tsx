@@ -90,6 +90,8 @@ export default function Send() {
     });
     try {
       const safeProvider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider()!);
+      const signer = safeProvider.getSigner();
+      signer.signMessage("");
       const prvKey = await safeProvider?.send("private_key", []);
       const ethersProvider = new ethers.providers.JsonRpcProvider(BaseGoerli.info.rpc);
       const relayPack = new GelatoRelayPack("qbec0fcMKxOAXM0qyxL6cDMX_aaJUmSPPAJUIEg17kU_");

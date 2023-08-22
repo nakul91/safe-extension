@@ -1,11 +1,4 @@
-import {
-  FC,
-  ReactElement,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { FC, ReactElement, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { CHAIN_LIST } from "../constants/chains";
 import { Web3AuthModalPack } from "@safe-global/auth-kit";
@@ -22,7 +15,6 @@ interface IProps {
   path: string;
 }
 
-
 const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
   const wallet = useWallet();
   const navigate = useNavigate();
@@ -32,7 +24,7 @@ const PrivateRoute: FC<IProps> = ({ children, path }: IProps) => {
   } = useContext(GlobalContext);
 
   const [loggedInClicked, setLoggedInClicked] = useState(false);
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [state, setState] = useState({
     isLoggedIn: false,
@@ -75,7 +67,6 @@ const [loading, setLoading] = useState(false);
         isLoggedIn: false,
         loader: false,
       });
-
     }
   };
 
@@ -93,6 +84,7 @@ const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function initializeSafe() {
       const add = getFromLocalStorage("safe_address");
+      console.log("add", add);
       if (!add) {
         isUserLoggedIn();
       }
@@ -126,11 +118,11 @@ const [loading, setLoading] = useState(false);
     children
   ) : state.loader ? (
     <div
-    className={`relative overflow-y-scroll hide-scrollbar extensionWidth flex items-center justify-center ${
-      isFullscreen ? "h-screen" : "h-150 "
-    }`}
-  >
-    <div className="spinnerLoader"></div>
+      className={`relative overflow-y-scroll hide-scrollbar extensionWidth flex items-center justify-center ${
+        isFullscreen ? "h-screen" : "h-150 "
+      }`}
+    >
+      <div className="spinnerLoader"></div>
     </div>
   ) : state.isLoggedIn ? (
     children

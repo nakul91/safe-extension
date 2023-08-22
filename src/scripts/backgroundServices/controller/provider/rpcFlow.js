@@ -330,6 +330,7 @@ const flowContext = flow
                   method === ETHEREUM_REQUESTS.personalSign
                     ? params[0]
                     : params[1],
+                messageData: params,
               },
               approvalComponent: "PrivateSign",
             },
@@ -341,7 +342,7 @@ const flowContext = flow
             if (res) {
               let privateMessage;
               if (method === ETHEREUM_REQUESTS.personalSign) {
-                privateMessage = providerController.personalSign(params);
+                privateMessage = "";
               } else if (method === ETHEREUM_REQUESTS.signTypedData) {
                 privateMessage = providerController.ethSignTypedData(params);
               } else if (method === ETHEREUM_REQUESTS.signTypedDataV1) {

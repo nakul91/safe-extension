@@ -1,10 +1,17 @@
 import { Fragment, useLayoutEffect, useRef, useState } from "react";
 
+import { ethers } from "ethers";
+import { EthersAdapter } from "@safe-global/protocol-kit";
+
 import { useWallet } from "../../../context/WalletContext";
 import { useApproval } from "../../../hooks/useApproval";
 import { getImage, handleCopy } from "../../../utils";
 import { ApprovalsGroupButtons, ApprovalsHeader, RequestedBy } from "../components";
 import { ETHEREUM_REQUESTS } from "../../../scripts/constants";
+import { modalConfig, web3AuthConfig, web3AuthOptions } from "../../../constants/chains/baseGoerli";
+import { Web3AuthModalPack } from "@safe-global/auth-kit";
+import { hexlify, toUtf8Bytes } from "ethers/lib/utils";
+import Safe, { PredictedSafeProps } from "@safe-global/protocol-kit";
 
 export default function PrivateSign({ params }: any) {
   const [, resolveApproval, rejectApproval] = useApproval();
@@ -53,9 +60,36 @@ export default function PrivateSign({ params }: any) {
   }, []);
 
   const handleSuccess = async () => {
-    await resolveApproval(true, true).then(() => {
-      closeComponent();
+    const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
+    await web3AuthModalPack.init({
+      options: web3AuthOptions,
+      adapters: undefined,
+      modalConfig,
     });
+    try {
+      const safeProvider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider()!);
+      const [message] = params.messageData;
+      console.log("message", message);
+      const hexMessage = hexlify(toUtf8Bytes(message));
+      console.log("hexMessage", hexMessage);
+      const ethAdapterOwner = new EthersAdapter({
+        ethers,
+        signerOrProvider: safeProvider,
+      });
+      const safeSdk = await Safe.create({
+        ethAdapter: ethAdapterOwner,
+        safeAddress: "0x2282B6bAbee6889735903D0ED651cb3c2b4A21Ba",
+      });
+      const signature = await safeSdk.signTransactionHash(hexMessage);
+      await resolveApproval({ resolved: true, signer: signature }, true).then(() => {
+        closeComponent();
+      });
+    } catch (e) {
+      console.log("error", e);
+      rejectApproval("Something went wrong", true).then(() => {
+        closeComponent();
+      });
+    }
   };
   const handleCancel = () => {
     rejectApproval("User rejected the request", true).then(() => {
@@ -125,7 +159,7 @@ export default function PrivateSign({ params }: any) {
             ) : null}
             <p className={`label2 break-all text-black dark:text-textDark-700 text-sm whitespace-pre-line`}>
               <div className="p-4">
-              <p className="mb-2.5 text-black">Message:</p>
+                <p className="mb-2.5 text-black">Message:</p>
                 <p className="text-black">{params.decodedMessage}</p>
               </div>
             </p>
