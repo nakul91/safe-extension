@@ -1,6 +1,7 @@
-# Safe Base - Extension Wallet
 🏆 🥉 ETH GLOBAL Super Hack 🚀, 3rd Place under Account abstraction 🔥.
 https://ethglobal.com/showcase/safe-base-oe55a
+
+# Safe Base - Extension Wallet
 
 ## 📚 Tech Stack
 
